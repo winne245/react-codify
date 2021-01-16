@@ -1,0 +1,7 @@
+ul.firebaseui-idp-list {
+    margin-left: -55px;
+    margin-top: 30px;
+    width: 440px;
+    display: flex;
+    justify-content: space-evenly;
+}

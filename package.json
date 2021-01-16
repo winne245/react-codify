@@ -1,0 +1,66 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@date-io/date-fns": "1.x",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@material-ui/pickers": "^3.2.10",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@tinymce/tinymce-react": "^3.8.3",
+    "ace-builds": "^1.4.12",
+    "axios": "^0.20.0",
+    "date-fns": "^2.16.1",
+    "draft-js": "^0.11.7",
+    "draft-js-export-html": "^1.4.1",
+    "draftjs-to-html": "^0.9.1",
+    "firebase": "^8.1.1",
+    "firebase-tools": "^8.12.1",
+    "global": "^4.4.0",
+    "jwt-decode": "^3.1.2",
+    "material-ui-datetimepicker": "^1.0.7",
+    "material-ui-pickers": "^2.2.4",
+    "qs": "^6.9.4",
+    "react": "^16.13.1",
+    "react-ace": "^9.1.4",
+    "react-dom": "^16.13.1",
+    "react-draft-wysiwyg": "^1.14.5",
+    "react-firebaseui": "^4.1.0",
+    "react-html-parser": "^2.0.2",
+    "react-json-to-html": "^0.0.6",
+    "react-loadingg": "^1.7.2",
+    "react-modal-login": "^1.4.5",
+    "react-render-html": "^0.6.0",
+    "react-resizable-grid": "^1.0.1",
+    "react-resize-panel": "^0.3.5",
+    "react-router-dom": "^5.2.0",
+    "react-router-modal": "^1.5.2",
+    "react-scripts": "3.4.3",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
