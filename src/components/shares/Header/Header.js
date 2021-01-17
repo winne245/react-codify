@@ -1,42 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Route, BrowserRouter as Router, Link, Switch as SwitchRouter, NavLink } from "react-router-dom";
-import clsx from 'clsx';
-import {
-  AppBar,
-  makeStyles,
-  Typography,
-  IconButton,
-  // Button,
-  Menu,
-  Toolbar,
-  MenuItem,
-  FormGroup,
-  FormControlLabel,
-  Switch,
-  Tabs,
-  Tab,
-  // Box,
-} from "@material-ui/core";
-import firebase from 'firebase';
-import HomeIcon from '@material-ui/icons/Home';
-import ClassIcon from '@material-ui/icons/Class';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
-import GroupIcon from '@material-ui/icons/Group';
-// import PropTypes from 'prop-types';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import { AppBar, IconButton, makeStyles, Menu, MenuItem, Switch, Toolbar } from "@material-ui/core";
 import Avatar from '@material-ui/core/Avatar';
-// import MenuIcon from "@material-ui/icons/Menu";
-// import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Badge from '@material-ui/core/Badge';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import ClassIcon from '@material-ui/icons/Class';
+import GroupIcon from '@material-ui/icons/Group';
+import HomeIcon from '@material-ui/icons/Home';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import clsx from 'clsx';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useStateValue } from "../../../context/StateProvider";
 import { ACTION_TYPE } from "../../../reducers/reducer";
-import SignIn from '../SignIn/SignIn'
-import SignUp from '../SignUp/SignUp'
+import SignIn from '../SignIn/SignIn';
+import SignUp from '../SignUp/SignUp';
 
-import Homepage from "../../features/Homepage/Homepage";
-import Classroom from "../../features/Classroom/Classroom";
-import Practice from "../../features/Practice/Practice";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -2,7 +2,6 @@
 import { Paper, StylesProvider } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import firebase from 'firebase';
-import jwt_decode from "jwt-decode";
 import React, { useEffect } from "react";
 // Loading page
 import { WaveLoading } from "react-loadingg";
@@ -33,8 +32,6 @@ import "./styles.css";
 
 
 
-// Styles
-import { purple } from "@material-ui/core/colors";
 
 // Configure Firebase.
 const config = {
@@ -53,22 +50,24 @@ function App() {
     }, 0);
   }, []);
 
+  // const [user, setUser] = useState([]);
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
-
       const fetchClassroomList = async () => {
         try {
-          const response = await axiosCodify.get('/classrooms');
+          const response = await axiosCodify.get('/authenticate');
           dispatch({ type: ACTION_TYPE.SIGN_IN });
+          dispatch({ type: ACTION_TYPE.USER, payload: response });
         } catch (error) {
           localStorage.removeItem("accessToken");
         }
       }
       fetchClassroomList();
-      const decoded = jwt_decode(localStorage.getItem("accessToken"));
-      state.user = decoded.payload;
+      // const decoded = jwt_decode(localStorage.getItem("accessToken"));
+      // state.user = decoded.payload;
     }
   }, []);
+
 
   // useEffect(() => {
   //   if (localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken")) {

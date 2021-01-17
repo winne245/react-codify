@@ -1,56 +1,33 @@
-import React, { useState } from 'react';
+import DateFnsUtils from '@date-io/date-fns';
+import { Accordion, AccordionDetails, AccordionSummary, Paper, Tooltip } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import Avatar from '@material-ui/core/Avatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FormControl from '@material-ui/core/FormControl';
+import Slide from '@material-ui/core/Slide';
+import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
-import CloseIcon from '@material-ui/icons/Close';
+import TextField from '@material-ui/core/TextField';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CodeIcon from '@material-ui/icons/Code';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Slide from '@material-ui/core/Slide';
-import { Accordion, AccordionDetails, AccordionSummary, InputLabel, Paper, Select, Tooltip } from '@material-ui/core';
-
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-  KeyboardDateTimePicker,
-  DateTimePicker,
-} from '@material-ui/pickers';
-
-// import { Editor } from 'react-draft-wysiwyg';
-// import { EditorState, convertToRaw } from 'draft-js';
-// import draftToMarkdown from 'draftjs-to-markdown';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import draftToHtml from 'draftjs-to-html';
+import React, { useEffect, useState } from 'react';
 // import { stateToHTML } from "draft-js-export-html";
 import renderHTML from 'react-render-html';
 import '../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import axiosCodify from '../../../../api/axios';
 import { useStateValue } from "../../../../context/StateProvider";
-import { ACTION_TYPE } from "../../../../reducers/reducer";
 // import axiosCodify, { setClientToken } from '../../../api/axios';
 import CreateWork_EditContent from "./CreateWork_EditContent";
-import axiosCodify from '../../../../api/axios';
+
+
 
 const useStyles = makeStyles((theme) => ({
   btn: {
@@ -128,6 +105,14 @@ export default function CreateWork(props) {
     setOpen(false);
   };
 
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleClickOpenEdit = () => {
+    setOpenEdit(true);
+  };
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+  };
+
   const [editorState, setEditorState] = useState();
   const callbackContent = (childData) => {
     setEditorState(childData);
@@ -172,27 +157,33 @@ export default function CreateWork(props) {
   const [work, setWork] = useState({
     title: "",
     content: "",
-    testCase: [''],
+    testCase: [],
     point: "",
     expireTime: "",
   });
 
-  const saveCreateWork = async () => {
-    console.log(testCase);
-    console.log(draftToHtml(editorState));
-    await setWork({
+  // const saveCreateWork = () => {
+  //   console.log('Error: ', work);
+  // };
+
+  const [selectedDate, handleDateChange] = useState("");
+  const [openDateTimePicker, setOpenDateTimePicker] = useState(false);
+  const dateTimePicker = () => {
+    setOpenDateTimePicker(!openDateTimePicker);
+  }
+
+  useEffect(() => {
+    setWork({
       ...work,
       content: draftToHtml(editorState),
       testCase: testCase,
       point: 100,
       expireTime: selectedDate,
     });
-  };
+    console.log('Error: ', work);
+  }, [editorState, selectedDate, testCase]);
 
   const doneCreateWork = () => {
-    console.log(testCase);
-    console.log(draftToHtml(editorState));
-    console.log(work);
     const save = async () => {
       try {
         const response = await axiosCodify.post(`${props.match.url}/create`, work);
@@ -207,12 +198,6 @@ export default function CreateWork(props) {
     save();
   };
 
-  const [selectedDate, handleDateChange] = useState(new Date(Date.now()));
-
-  const [openDateTimePicker, setOpenDateTimePicker] = useState(false);
-  const dateTimePicker = () => {
-    setOpenDateTimePicker(!openDateTimePicker);
-  }
   return (
     <>
       <div className={classes.btn}>
@@ -232,9 +217,9 @@ export default function CreateWork(props) {
               <Typography variant="h6" className={classes.title}>
                 Assignment
               </Typography>
-              <Button autoFocus color="inherit" type="submit" onClick={saveCreateWork}>
+              {/* <Button autoFocus color="inherit" type="submit" onClick={saveCreateWork}>
                 Save
-              </Button>
+              </Button> */}
               <Button autoFocus color="inherit" type="submit" onClick={doneCreateWork}>
                 Submit
               </Button>
@@ -253,7 +238,11 @@ export default function CreateWork(props) {
                     onChange={e => setWork({ ...work, title: e.target.value })}
                   />
                 </Paper>
-                <Paper className={classes.paper}>
+                <Paper
+                  className={classes.paper}
+                  onClick={handleClickOpenEdit}
+                  onChange={e => setWork({ ...work, content: draftToHtml(editorState) })}
+                >
                   <Typography variant="h6">
                     Content
                   </Typography>
@@ -262,7 +251,7 @@ export default function CreateWork(props) {
                     {renderHTML(draftToHtml(editorState))}
                   </div>
                 </Paper>
-                <CreateWork_EditContent callbackContent={callbackContent} />
+                <CreateWork_EditContent open={openEdit} handleClose={handleCloseEdit} callbackContent={callbackContent} />
               </Grid>
               <Grid item xs={4} >
                 <Grid container spacing={2}>

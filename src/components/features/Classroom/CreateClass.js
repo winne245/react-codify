@@ -1,27 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Route, BrowserRouter as Router, Link, Switch as SwitchRouter, NavLink, useRouteMatch, Redirect, useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Container from '@material-ui/core/Container';
-
-import HomeIcon from '@material-ui/icons/Home';
-import ClassIcon from '@material-ui/icons/Class';
-
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-import RecentActorsIcon from '@material-ui/icons/RecentActors';
-import axiosClient from '../../../api/axiosClient';
-import axiosCodify from '../../../api/axios';
-import productApi from '../../../api/productApi';
-import { useStateValue } from "../../../context/StateProvider";
-import { ACTION_TYPE } from "../../../reducers/reducer";
-
 import { Paper, TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
+import { makeStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import clsx from 'clsx';
+import React, { useState } from 'react';
+import { useHistory, useRouteMatch } from "react-router-dom";
+import axiosCodify from '../../../api/axios';
+import { useStateValue } from "../../../context/StateProvider";
 
 const drawerWidth = 240;
 

@@ -165,7 +165,7 @@ export default function DetailWork() {
               <strong>{exercise.title}</strong>
             </Typography>
             <Typography component="p">
-              {exercise.creator} - {new Date(exercise.createAt).toDateString()}
+              {exercise.creator} - {new Date(exercise.createAt).toLocaleString()}
             </Typography>
             <Typography component="p">
               {(exerciseResult.length == 0) ? (
@@ -183,7 +183,7 @@ export default function DetailWork() {
                 )}
             </Typography>
             <Typography component="p">
-              Due {new Date(exercise.expiredTime).toDateString()}
+              Due {new Date(exercise.expiredTime).toLocaleString()}
             </Typography>
           </Paper>
           <Paper className={classes.paperLeftComment}>

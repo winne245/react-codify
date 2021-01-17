@@ -6,6 +6,7 @@ export const initialState = {
 };
 
 export const ACTION_TYPE = {
+  USER: "USER",
   SIGN_IN: "SIGN_IN",
   SIGN_OUT: "SIGN_OUT",
   START_LOADING: "START_LOADING",
@@ -16,6 +17,11 @@ export const ACTION_TYPE = {
 const reducer = (state, action) => {
   // eslint-disable-next-line default-case
   switch (action.type) {
+    case ACTION_TYPE.USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
     case ACTION_TYPE.SIGN_IN:
       return {
         ...state,

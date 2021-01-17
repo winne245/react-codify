@@ -1,12 +1,12 @@
-import React from 'react';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
+import { makeStyles } from '@material-ui/core/styles';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
+import PeopleIcon from '@material-ui/icons/People';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   sidebarList: {

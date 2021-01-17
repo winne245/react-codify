@@ -1,62 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Route, BrowserRouter as Router, Link, Switch as SwitchRouter, NavLink, useRouteMatch, useParams, Redirect } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Drawer from '@material-ui/core/Drawer';
+import { Accordion, AccordionDetails, AccordionSummary, Grid, Paper, TextField } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Chip from '@material-ui/core/Chip';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
-import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
-import CloseIcon from '@material-ui/icons/Close';
-import DoneIcon from '@material-ui/icons/Done';
-import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
-import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import BatteryCharging50Icon from '@material-ui/icons/BatteryCharging50';
-import BatteryCharging80Icon from '@material-ui/icons/BatteryCharging80';
-import BatteryChargingFullIcon from '@material-ui/icons/BatteryChargingFull';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import HomeIcon from '@material-ui/icons/Home';
-import ClassIcon from '@material-ui/icons/Class';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
-import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import ChatIcon from '@material-ui/icons/Chat';
-
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-import RecentActorsIcon from '@material-ui/icons/RecentActors';
-// import axiosClient from '../../../api/axiosClient';
-// import axiosCodify from '../../../api/axios';
-// import productApi from '../../../api/productApi';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import { useStateValue } from "../../../../context/StateProvider";
-// import { ACTION_TYPE } from "../../../reducers/reducer";
 
-
-import { ExpandLess, ExpandMore, StarBorder } from '@material-ui/icons';
-import { Collapse, Dialog, Grid, Paper, TextField, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
-import axiosCodify from '../../../../api/axios';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -167,15 +127,6 @@ export default function Stream(props) {
 
   return (
     <div className={classes.root}>
-      {/* <SwitchRouter>
-              <Route exact path={match.url} />
-              <Route path={`${match.url}/a`} component={Detail} />
-              <Route path={`${match.url}/b`} component={Detail} />
-              <Route path={`${match.url}/c`} component={Detail} />
-              <Route path={`${match.url}/d`} component={Detail} />
-              <Route path={`${match.url}/e`} component={Detail} />
-              <Route component={NotFound} />
-            </SwitchRouter> */}
       <Grid container spacing={2} className={classes.grid}>
         <Grid item xs={12}>
           <Card className={classes.card}>
@@ -189,7 +140,14 @@ export default function Stream(props) {
                 {props.classroom.title}
               </Typography>
               <Typography component="p">
-                Class code: {props.classroom.joinId}
+                {(state.user.id == props.classroom.teacher?._id) ? (
+                  <>
+                    Class code: {props.classroom.joinId}
+                  </>
+                ) : (
+                    <>
+                    </>
+                  )}
               </Typography>
             </CardContent>
           </Card>
@@ -202,7 +160,7 @@ export default function Stream(props) {
             <Typography component="p" className={classes.paperLeftText}>
               No work due soon
             </Typography>
-            <Link to="/classroom/to-do/assigned" className={classes.paperLeftLink}>
+            <Link to={`/classrooms/${props.classroom.alias}/exercises`} className={classes.paperLeftLink}>
               View all
             </Link>
           </Paper>
@@ -280,38 +238,39 @@ export default function Stream(props) {
 
           <Grid item xs={12}>
             <Paper className={classes.paperRightBottom}>
-              <Typography variant="h5" component="h1">
-                Communicate with your class here
-              </Typography>
-              <div className={classes.paperRightText}>
-                <ChatIcon />
-                <Typography component="p" style={{ marginLeft: 10 }}>
-                  Create and schedule announcements
-                </Typography>
-              </div>
-              <div className={classes.paperRightText}>
-                <ChatIcon />
-                <Typography component="p" style={{ marginLeft: 10 }}>
-                  Respond to student posts
-                </Typography>
-              </div>
+              {(state.user.id == props.classroom.teacher?._id) ? (
+                <>
+                  <Typography variant="h5" component="h1">
+                    Communicate with your class here
+                  </Typography>
+                  <div className={classes.paperRightText}>
+                    <ChatIcon />
+                    <Typography component="p" style={{ marginLeft: 10 }}>
+                      Create and schedule announcements
+                  </Typography>
+                  </div>
+                  <div className={classes.paperRightText}>
+                    <ChatIcon />
+                    <Typography component="p" style={{ marginLeft: 10 }}>
+                      Respond to student posts
+                  </Typography>
+                  </div>
+                </>
+              ) : (
+                  <>
+                    <Typography variant="h5" component="h1">
+                      View class updates and connect with your class here
+                    </Typography>
+                    <div className={classes.paperRightText}>
+                      <ChatIcon />
+                      <Typography component="p" style={{ marginLeft: 10 }}>
+                        See when new assignments are posted
+                    </Typography>
+                    </div>
+                  </>
+                )}
             </Paper>
           </Grid>
-
-          <Grid item xs={12}>
-            <Paper className={classes.paperRightBottom}>
-              <Typography variant="h5" component="h1">
-                View class updates and connect with your class here
-              </Typography>
-              <div className={classes.paperRightText}>
-                <ChatIcon />
-                <Typography component="p" style={{ marginLeft: 10 }}>
-                  See when new assignments are posted
-                </Typography>
-              </div>
-            </Paper>
-          </Grid>
-
         </Grid>
       </Grid>
     </div>

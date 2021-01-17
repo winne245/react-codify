@@ -9,9 +9,6 @@ import React from 'react';
 import { Link, useRouteMatch } from "react-router-dom";
 import { useStateValue } from "../../../context/StateProvider";
 
-
-
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
   },
   cardTitleContent: {
     whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  cardDescriptionContent: {
+    height: 80,
+    whiteSpace: 'normal',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
@@ -114,13 +117,13 @@ export default function AllClass(props) {
                           title="Contemplative Reptile"
                         />
                         <Typography variant="body2" color="textSecondary" component="p" className={classes.cardTeacher} >
-                          <strong>{item.teacher.email}</strong>
+                          <strong>{item.teacher.firstName}  {item.teacher.lastName}</strong>
                         </Typography>
                         <CardContent className={classes.cardContent}>
                           <Typography variant="h5" component="h2" className={classes.cardTitleContent}>
                             {item.title}
                           </Typography>
-                          <Typography variant="body2" color="textSecondary" component="p">
+                          <Typography variant="body2" color="textSecondary" component="p" className={classes.cardDescriptionContent}>
                             {item.description}
                           </Typography>
                         </CardContent>
@@ -147,13 +150,13 @@ export default function AllClass(props) {
                           title="Contemplative Reptile"
                         />
                         <Typography variant="body2" color="textSecondary" component="p" className={classes.cardTeacher} >
-                          <strong>{item.classroom.teacher}</strong>
+                          <strong>{item.classroom.teacher.firstName}  {item.classroom.teacher.lastName}</strong>
                         </Typography>
                         <CardContent className={classes.cardContent}>
                           <Typography variant="h5" component="h2" className={classes.cardTitleContent}>
                             {item.classroom.title}
                           </Typography>
-                          <Typography variant="body2" color="textSecondary" component="p">
+                          <Typography variant="body2" color="textSecondary" component="p" className={classes.cardDescriptionContent}>
                             {item.classroom.description}
                           </Typography>
                         </CardContent>

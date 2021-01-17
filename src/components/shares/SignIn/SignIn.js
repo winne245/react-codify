@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
 import Avatar from '@material-ui/core/Avatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import jwt_decode from "jwt-decode";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Dialog from '@material-ui/core/Dialog';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import React, { useState } from 'react';
+import axiosCodify from '../../../api/axios';
 import { useStateValue } from "../../../context/StateProvider";
 import { ACTION_TYPE } from "../../../reducers/reducer";
-import firebase from 'firebase';
-import { StyledFirebaseAuth } from 'react-firebaseui';
-import axiosCodify, { setClientToken } from '../../../api/axios';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,47 +73,19 @@ export default function SignIn() {
 
   const handleSignInSubmit = (e) => {
     e.preventDefault();
-    // await axiosCodify.post('/signin', user)
-    //   .then(res => {
-    //     if (res.data.accessToken) {
-    //       console.log(res.data);
-    //       setClientToken(res.data.accessToken);
-    //       localStorage.setItem("accessToken", res.data.accessToken);
-    //       window.location.reload();
-    //     }
-    //     return res.data;
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
     const signIn = async () => {
       try {
         const response = await axiosCodify.post('/signin', user);
         localStorage.setItem("accessToken", response.accessToken);
-        const decoded = jwt_decode(response.accessToken);
-        state.user = decoded.payload;
+        // const decoded = jwt_decode(response.accessToken);
+        // state.user = decoded.payload;
+        // console.log(state.user)
         dispatch({ type: ACTION_TYPE.SIGN_IN });
       } catch (error) {
         console.log('Error: ', error);
       }
     }
-    signIn();
-
-    // const signIn = async () => {
-    //   try {
-    //     const response = await axiosCodify.post('/signin', user);
-    //     if (isChecked) {
-    //       localStorage.setItem("accessToken", response.accessToken);
-    //     } else {
-    //       sessionStorage.setItem("accessToken", response.accessToken);
-    //     }
-    //     dispatch({ type: ACTION_TYPE.SIGN_IN });
-    //   } catch (error) {
-    //     console.log('Error: ', error);
-    //   }
-    // }
-    // signIn();
-
+    signIn();;
   };
 
   return (
