@@ -29,10 +29,6 @@ import { ACTION_TYPE } from "./reducers/reducer";
 // Styles
 import "./styles.css";
 
-
-
-
-
 // Configure Firebase.
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API,
@@ -53,7 +49,7 @@ function App() {
   // const [user, setUser] = useState([]);
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
-      const fetchClassroomList = async () => {
+      const authenticate = async () => {
         try {
           const response = await axiosCodify.get('/authenticate');
           dispatch({ type: ACTION_TYPE.SIGN_IN });
@@ -62,7 +58,7 @@ function App() {
           localStorage.removeItem("accessToken");
         }
       }
-      fetchClassroomList();
+      authenticate();
       // const decoded = jwt_decode(localStorage.getItem("accessToken"));
       // state.user = decoded.payload;
     }

@@ -13,9 +13,6 @@ import NotFound from "../../../shares/NotFound/NotFound";
 import CreateWork from "./CreateWork";
 import DetailWork from './DetailWork';
 
-
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',

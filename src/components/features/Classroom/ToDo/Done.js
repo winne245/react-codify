@@ -10,10 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import React, { useState } from 'react';
-import { useRouteMatch } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { useStateValue } from "../../../../context/StateProvider";
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,12 +22,17 @@ const useStyles = makeStyles((theme) => ({
     padding: '15px 30px 10px 30px',
   },
   nested: {
+    display: 'flex',
+    justifyContent: 'space-between',
     width: '95%',
     marginLeft: theme.spacing(5.5),
   },
+  nestedTitle: {
+    display: 'flex',
+  }
 }));
 
-export default function Done() {
+export default function Done(props) {
   const classes = useStyles();
   const [state, dispatch] = useStateValue();
 
@@ -46,46 +49,8 @@ export default function Done() {
     setOpen3(!open3);
   };
 
-  const match = useRouteMatch();
-
-  const [classroomList, setClassroomList] = useState([]);
-  // useEffect(() => {
-  //   if (state.isSignIn) {
-  //     const fetchClassroomList = async () => {
-  //     try {
-  //       const response = await axiosCodify.get('/classroom');
-  //       setClassroomList(response)
-  //       console.log('Fetch successfully: ', response);
-  //     } catch (error) {
-  //       console.log('Error: ', error);
-  //     }
-  //   }
-  //   fetchClassroomList();
-  //   }
-  // }, [state.isSignIn]);
-  // useEffect(() => {
-  //   const fetchClassroomList = async () => {
-  //     try {
-  //       const response = await axiosClient.get('/products');
-  //       console.log('Fetch successfully: ', response);
-  //     } catch (error) {
-  //       console.log('Error: ', error);
-  //     }
-  //   }
-  //   fetchClassroomList();
-  // }, []);
   return (
     <div className={classes.root}>
-      {/* <SwitchRouter>
-              <Route exact path={match.url} />
-              <Route path={`${match.url}/a`} component={Detail} />
-              <Route path={`${match.url}/b`} component={Detail} />
-              <Route path={`${match.url}/c`} component={Detail} />
-              <Route path={`${match.url}/d`} component={Detail} />
-              <Route path={`${match.url}/e`} component={Detail} />
-              <Route component={NotFound} />
-            </SwitchRouter> */}
-      {/* <main className={classes.content}> */}
       <Paper className={classes.paper}>
         <List
           component="nav"
@@ -106,13 +71,31 @@ export default function Done() {
           </ListItem>
           <Collapse in={open1} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <LibraryBooksIcon />
-                </ListItemIcon>
-                <ListItemText primary="BT1" />
-                <ListItemText primary="11/12/2020" style={{ marginLeft: 650 }} />
-              </ListItem>
+
+              {props.doneExercises.map((item, index) => (
+                props.firstDayThisWeek <= new Date(item.expiredTime) && new Date(item.expiredTime) <= props.lastDayThisWeek) ? (
+                  <div key={item._id}>
+                    <ListItem
+                      button
+                      to={`/classrooms/${item.classroom.alias}/exercises/${item._id}`}
+                      component={Link}
+                      className={classes.nested}
+                    >
+                      <div className={classes.nestedTitle}>
+                        <ListItemIcon style={{ marginTop: 3 }}>
+                          <LibraryBooksIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={item.classroom.title} />
+                        <ListItemText primary={item.title} style={{ paddingLeft: 30 }} />
+                      </div>
+                      {new Date(item.expiredTime).toLocaleString()}
+                    </ListItem>
+                  </div>
+                ) : (
+                  <>
+                  </>
+                ))}
+
             </List>
           </Collapse>
           <ListItem button onClick={handle2Click}>
@@ -120,15 +103,31 @@ export default function Done() {
             {open2 ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={open2} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <LibraryBooksIcon />
-                </ListItemIcon>
-                <ListItemText primary="BT2" />
-                <ListItemText primary="5/12/2020" style={{ marginLeft: 650 }} />
-              </ListItem>
-            </List>
+
+            {props.doneExercises.map((item, index) => (
+              props.firstDayLastWeek <= new Date(item.expiredTime) && new Date(item.expiredTime) <= props.lastDayLastWeek) ? (
+                <div key={item._id}>
+                  <ListItem
+                    button
+                    to={`/classrooms/${item.classroom.alias}/exercises/${item._id}`}
+                    component={Link}
+                    className={classes.nested}
+                  >
+                    <div className={classes.nestedTitle}>
+                      <ListItemIcon style={{ marginTop: 3 }}>
+                        <LibraryBooksIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={item.classroom.title} />
+                      <ListItemText primary={item.title} style={{ paddingLeft: 30 }} />
+                    </div>
+                    {new Date(item.expiredTime).toLocaleString()}
+                  </ListItem>
+                </div>
+              ) : (
+                <>
+                </>
+              ))}
+
           </Collapse>
           <ListItem button onClick={handle3Click}>
             <ListItemText primary="Earlier" />
@@ -136,13 +135,31 @@ export default function Done() {
           </ListItem>
           <Collapse in={open3} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <LibraryBooksIcon />
-                </ListItemIcon>
-                <ListItemText primary="BT3" />
-                <ListItemText primary="15/11/2020" style={{ marginLeft: 650 }} />
-              </ListItem>
+
+              {props.doneExercises.map((item, index) => (
+                new Date(item.expiredTime) < props.firstDayLastWeek) ? (
+                  <div key={item._id}>
+                    <ListItem
+                      button
+                      to={`/classrooms/${item.classroom.alias}/exercises/${item._id}`}
+                      component={Link}
+                      className={classes.nested}
+                    >
+                      <div className={classes.nestedTitle}>
+                        <ListItemIcon style={{ marginTop: 3 }}>
+                          <LibraryBooksIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={item.classroom.title} />
+                        <ListItemText primary={item.title} style={{ paddingLeft: 30 }} />
+                      </div>
+                      {new Date(item.expiredTime).toLocaleString()}
+                    </ListItem>
+                  </div>
+                ) : (
+                  <>
+                  </>
+                ))}
+
             </List>
           </Collapse>
         </List>

@@ -4,7 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axiosCodify from '../../../../api/axios';
 import { NavLink, Redirect, Route, Switch as SwitchRouter, useRouteMatch } from "react-router-dom";
 import { useStateValue } from "../../../../context/StateProvider";
 import NotFound from "../../../shares/NotFound/NotFound";
@@ -125,32 +126,35 @@ export default function ToDo() {
   const [state, dispatch] = useStateValue();
   const match = useRouteMatch();
 
-  const [classroomList, setClassroomList] = useState([]);
-  // useEffect(() => {
-  //   if (state.isSignIn) {
-  //     const fetchClassroomList = async () => {
-  //     try {
-  //       const response = await axiosCodify.get('/classroom');
-  //       setClassroomList(response)
-  //       console.log('Fetch successfully: ', response);
-  //     } catch (error) {
-  //       console.log('Error: ', error);
-  //     }
-  //   }
-  //   fetchClassroomList();
-  //   }
-  // }, [state.isSignIn]);
-  // useEffect(() => {
-  //   const fetchClassroomList = async () => {
-  //     try {
-  //       const response = await axiosClient.get('/products');
-  //       console.log('Fetch successfully: ', response);
-  //     } catch (error) {
-  //       console.log('Error: ', error);
-  //     }
-  //   }
-  //   fetchClassroomList();
-  // }, []);
+  const [assignedExercises, setAssignedExercises] = useState([]);
+  const [missingExercises, setMissingExercises] = useState([]);
+  const [doneExercises, setDoneExercises] = useState([]);
+  useEffect(() => {
+    if (state.isSignIn) {
+      const fetchAllExercises = async () => {
+        try {
+          const response = await axiosCodify.get('/classrooms/exercises/todo');
+          setAssignedExercises(response.notDoneExercises);
+          setMissingExercises(response.lateSubmitExercises);
+          setDoneExercises(response.doneExercises);
+        } catch (error) {
+          console.log('Error: ', error);
+        }
+      }
+      fetchAllExercises();
+    }
+  }, [state.isSignIn]);
+
+  var curr = new Date; // get current date
+  var firstThisWeek = curr.getDate() - curr.getDay() + 1;
+  var lastThisWeek = firstThisWeek + 6;
+  var firstDayThisWeek = new Date(curr.setDate(firstThisWeek));
+  var lastDayThisWeek = new Date(curr.setDate(lastThisWeek));
+  var firstLastWeek = firstThisWeek - 7;
+  var lastLastWeek = firstLastWeek + 6;
+  var firstDayLastWeek = new Date(curr.setDate(firstLastWeek));
+  var lastDayLastWeek = new Date(curr.setDate(lastLastWeek));
+
   return (
     <div className={classes.root}>
       <Toolbar className={clsx(classes.toolbarLight, state.isDarkMode && classes.toolbarDark)}>
@@ -189,9 +193,33 @@ export default function ToDo() {
       <Container maxWidth="md" className={classes.container}>
         <SwitchRouter>
           <Redirect exact from={`${match.url}/`} to={`${match.url}/assigned`} />
-          <Route path={`${match.url}/assigned`} component={Assigned} />
-          <Route path={`${match.url}/missing`} component={Missing} />
-          <Route path={`${match.url}/done`} component={Done} />
+          <Route path={`${match.url}/assigned`} >
+            <Assigned
+              assignedExercises={assignedExercises}
+              firstDayThisWeek={firstDayThisWeek}
+              lastDayThisWeek={lastDayThisWeek}
+              firstDayLastWeek={firstDayLastWeek}
+              lastDayLastWeek={lastDayLastWeek}
+            />
+          </Route>
+          <Route path={`${match.url}/missing`}>
+            <Missing
+              missingExercises={missingExercises}
+              firstDayThisWeek={firstDayThisWeek}
+              lastDayThisWeek={lastDayThisWeek}
+              firstDayLastWeek={firstDayLastWeek}
+              lastDayLastWeek={lastDayLastWeek}
+            />
+          </Route>
+          <Route path={`${match.url}/done`}>
+            <Done
+              doneExercises={doneExercises}
+              firstDayThisWeek={firstDayThisWeek}
+              lastDayThisWeek={lastDayThisWeek}
+              firstDayLastWeek={firstDayLastWeek}
+              lastDayLastWeek={lastDayLastWeek}
+            />
+          </Route>
           <Route component={NotFound} />
         </SwitchRouter>
       </Container>
