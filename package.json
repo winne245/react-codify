@@ -40,6 +40,7 @@
     "react-router-dom": "^5.2.0",
     "react-router-modal": "^1.5.2",
     "react-scripts": "3.4.3",
+    "socket.io-client": "2.3.0",
     "uuid": "^8.3.2"
   },
   "scripts": {

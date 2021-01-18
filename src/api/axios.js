@@ -1,5 +1,5 @@
 import axios from "axios";
-import queryString from 'query-string';
+import queryString from "query-string";
 
 const config = {
   Accept: "application/json",
@@ -12,7 +12,7 @@ const axiosCodify = axios.create({
   // headers: {
   //   'content-type': 'application/json',
   // },
-  paramsSerializer: params => queryString.stringify(params),
+  paramsSerializer: (params) => queryString.stringify(params),
 });
 
 // export const setClientToken = (token) => {
@@ -32,18 +32,21 @@ axiosCodify.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-})
-axiosCodify.interceptors.response.use((response) => {
-  if (response && response.data) {
-    // console.log('response: ', response);
-    console.log('response.data: ', response.data);
-    // response.data.forEach((item) => {
-    //   console.log(item.teacher)
-    // })
-    return response.data;
-  }
-  return response;
-}, (error) => {
-  throw error;
 });
+axiosCodify.interceptors.response.use(
+  (response) => {
+    if (response && response.data) {
+      // console.log('response: ', response);
+      // console.log('response.data: ', response.data);
+      // response.data.forEach((item) => {
+      //   console.log(item.teacher)
+      // })
+      return response.data;
+    }
+    return response;
+  },
+  (error) => {
+    throw error;
+  }
+);
 export default axiosCodify;

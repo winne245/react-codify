@@ -1,12 +1,17 @@
 // Material style
 import { Paper, StylesProvider } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
-import firebase from 'firebase';
+import firebase from "firebase";
 import React, { useEffect } from "react";
 // Loading page
 import { WaveLoading } from "react-loadingg";
-import { BrowserRouter as Router, Redirect, Route, Switch as SwitchRouter } from "react-router-dom";
-import axiosCodify from './api/axios';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch as SwitchRouter,
+} from "react-router-dom";
+import axiosCodify from "./api/axios";
 // Custom style
 import "./App.css";
 import { theme } from "./assets/styles/style";
@@ -51,19 +56,18 @@ function App() {
     if (localStorage.getItem("accessToken")) {
       const authenticate = async () => {
         try {
-          const response = await axiosCodify.get('/authenticate');
+          const response = await axiosCodify.get("/authenticate");
           dispatch({ type: ACTION_TYPE.SIGN_IN });
           dispatch({ type: ACTION_TYPE.USER, payload: response });
         } catch (error) {
           localStorage.removeItem("accessToken");
         }
-      }
+      };
       authenticate();
       // const decoded = jwt_decode(localStorage.getItem("accessToken"));
       // state.user = decoded.payload;
     }
-  }, []);
-
+  }, [state.isSignIn]);
 
   // useEffect(() => {
   //   if (localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken")) {
@@ -97,29 +101,32 @@ function App() {
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme(state.isDarkMode)}>
-        <Paper style={{ minHeight: '100.1vh', backgroundColor: state.isDarkMode ? '#353535' : '#f0f2f5' }}>
+        <Paper
+          style={{
+            minHeight: "100.1vh",
+            backgroundColor: state.isDarkMode ? "#353535" : "#f0f2f5",
+          }}>
           <div className="app">
             {state.isLoading ? (
-              <WaveLoading color={'#3578E5'} size="large" />
+              <WaveLoading color={"#3578E5"} size="large" />
             ) : (
-                <>
-                  <Router>
-                    {/* <Grid container direction="row" justify="center" alignItems="center"> */}
-                    {/* <Detail /> */}
-                    {/* <Demo /> */}
-                    <Header />
-                    <SwitchRouter>
-                      <Redirect exact from="/" to="/homepage" />
-                      <Route path="/homepage" component={Homepage} />
-                      <Route path="/classrooms" component={Classroom} />
-                      <Route path="/lesson" component={Lesson} />
-                      <Route path="/practice" component={Practice} />
-                      <Route path="/social" component={Practice} />
-                      <Route component={NotFound} />
-                    </SwitchRouter>
+              <>
+                <Router>
+                  {/* <Grid container direction="row" justify="center" alignItems="center"> */}
+                  {/* <Detail /> */}
+                  {/* <Demo /> */}
+                  <Header />
+                  <SwitchRouter>
+                    <Redirect exact from="/" to="/homepage" />
+                    <Route path="/homepage" component={Homepage} />
+                    <Route path="/classrooms" component={Classroom} />
+                    <Route path="/lesson" component={Lesson} />
+                    <Route path="/practice" component={Practice} />
+                    <Route path="/social" component={Practice} />
+                    <Route component={NotFound} />
+                  </SwitchRouter>
 
-
-                    {/* <Switch>
+                  {/* <Switch>
                       <Redirect exact from="/" to="/homepage" />
                       {routes.map((route) => (
                         <Route
@@ -129,12 +136,12 @@ function App() {
                         />
                       ))}
                     </Switch> */}
-                    {/* <Footer /> */}
-                    {/* <Scroll showBelow={300} /> */}
-                    {/* </Grid> */}
-                  </Router>
-                </>
-              )}
+                  {/* <Footer /> */}
+                  {/* <Scroll showBelow={300} /> */}
+                  {/* </Grid> */}
+                </Router>
+              </>
+            )}
           </div>
         </Paper>
       </ThemeProvider>
