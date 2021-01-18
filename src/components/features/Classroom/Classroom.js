@@ -98,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 25,
     marginLeft: -5,
     marginRight: 15,
+    backgroundColor: '#ff6529',
   },
   space: {
     height: 10
@@ -165,45 +166,56 @@ export default function Classroom() {
                   <AddBoxIcon className={classes.iconSidebar} />
                   <ListItemText primary="Join class" />
                 </ListItem>
-                <ListItem
-                  button
-                  to={`${match.url}/create-class`}
-                  component={NavLink}
-                  className={classes.sidebarItem}
-                  activeClassName={clsx(classes.listItemLightActive, state.isDarkMode && classes.listItemDarkActive)}
-                >
-                  <AddToPhotosIcon className={classes.iconSidebar} />
-                  <ListItemText primary="Create class" />
-                </ListItem>
-                <div className={classes.space} />
 
-                <Divider />
-                <ListSubheader inset className={classes.myClassTitle} >Teaching</ListSubheader>
-                <ListItem
-                  button
-                  to={`${match.url}/to-review`}
-                  component={NavLink}
-                  className={classes.sidebarItem}
-                  activeClassName={clsx(classes.listItemLightActive, state.isDarkMode && classes.listItemDarkActive)}
-                >
-                  <WorkOutlineIcon className={classes.iconSidebar} />
-                  <ListItemText primary="To-review" />
-                </ListItem>
-
-                {createdClassroom.map((item, index) => (
-                  <div key={item._id}>
+                {state.user.role == 'teacher' ? (
+                  <>
                     <ListItem
                       button
-                      to={`${match.url}/${item.alias}`}
+                      to={`${match.url}/create-class`}
                       component={NavLink}
                       className={classes.sidebarItem}
                       activeClassName={clsx(classes.listItemLightActive, state.isDarkMode && classes.listItemDarkActive)}
                     >
-                      <Avatar alt="" src={require('../../../assets/images/a.png')} className={classes.avarSidebar} />
-                      <ListItemText primary={item.title} />
+                      <AddToPhotosIcon className={classes.iconSidebar} />
+                      <ListItemText primary="Create class" />
                     </ListItem>
-                  </div>
-                ))}
+                    <div className={classes.space} />
+
+                    <Divider />
+                    <ListSubheader inset className={classes.myClassTitle} >Teaching</ListSubheader>
+                    <ListItem
+                      button
+                      to={`${match.url}/to-review`}
+                      component={NavLink}
+                      className={classes.sidebarItem}
+                      activeClassName={clsx(classes.listItemLightActive, state.isDarkMode && classes.listItemDarkActive)}
+                    >
+                      <WorkOutlineIcon className={classes.iconSidebar} />
+                      <ListItemText primary="To-review" />
+                    </ListItem>
+
+                    {createdClassroom.map((item, index) => (
+                      <div key={item._id}>
+                        <ListItem
+                          button
+                          to={`${match.url}/${item.alias}`}
+                          component={NavLink}
+                          className={classes.sidebarItem}
+                          activeClassName={clsx(classes.listItemLightActive, state.isDarkMode && classes.listItemDarkActive)}
+                        >
+                          <Avatar className={classes.avarSidebar} >
+                            {item.title.charAt(0)}
+                          </Avatar>
+                          <ListItemText primary={item.title} />
+                        </ListItem>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                    <></>
+                  )}
+
+
 
                 <div className={classes.space} />
                 <Divider />
@@ -228,7 +240,10 @@ export default function Classroom() {
                       className={classes.sidebarItem}
                       activeClassName={clsx(classes.listItemLightActive, state.isDarkMode && classes.listItemDarkActive)}
                     >
-                      <Avatar alt="" src={require('../../../assets/images/a.png')} className={classes.avarSidebar} />
+                      {/* <Avatar alt="" src={require('../../../assets/images/a.png')} className={classes.avarSidebar} /> */}
+                      <Avatar className={classes.avarSidebar} >
+                        {item.classroom.title.charAt(0)}
+                      </Avatar>
                       <ListItemText primary={item.classroom.title} />
                     </ListItem>
                   </div>

@@ -165,7 +165,7 @@ export default function DetailWork() {
               <strong>{exercise.title}</strong>
             </Typography>
             <Typography component="p">
-              {exercise.creator} - {new Date(exercise.createAt).toLocaleString()}
+              {exercise.creator?.firstName} {exercise.creator?.lastName} - {new Date(exercise.createAt).toLocaleString()}
             </Typography>
             <Typography component="p">
               {(exerciseResult.length == 0) ? (
@@ -189,7 +189,10 @@ export default function DetailWork() {
           <Paper className={classes.paperLeftComment}>
             <Accordion >
               <AccordionSummary expandIcon={<ExpandMoreIcon />} style={{ height: 60 }}>
-                <Avatar alt="" src={require('../../../../assets/images/avatar.png')} />
+                {/* <Avatar alt="" src={require('../../../../assets/images/avatar.png')} /> */}
+                <Avatar style={{ backgroundColor: '#3c87c0' }} >
+                  {state.user.firstName.charAt(0)}
+                </Avatar>
                 <Typography style={{ marginLeft: 12, paddingTop: 10 }}>
                   Public comments
                 </Typography>
@@ -272,9 +275,13 @@ export default function DetailWork() {
             >
               work
             </Button> */}
-            <Code exercise={exercise} exerciseResultCode={exerciseResultCode} callbackOpen={callbackOpen} />
+            <Code
+              exercise={exercise}
+              exerciseResultCode={exerciseResultCode}
+              callbackOpen={callbackOpen}
+            />
           </Paper>
-          <Paper className={classes.paperRightComment}>
+          {/* <Paper className={classes.paperRightComment}>
             <Accordion >
               <AccordionSummary expandIcon={<ExpandMoreIcon />} style={{ height: 60 }}>
                 <Avatar alt="" src={require('../../../../assets/images/avatar.png')} />
@@ -322,7 +329,7 @@ export default function DetailWork() {
                 </form>
               </AccordionDetails>
             </Accordion>
-          </Paper>
+          </Paper> */}
           <Paper className={classes.paperRight}>
             <Typography gutterBottom variant="h5" component="h1">
               Students work

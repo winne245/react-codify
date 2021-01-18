@@ -30,6 +30,7 @@ import {
   sendComment,
   loadOldComments,
 } from "../../../../api/socketIO";
+import Post from "./Post";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -124,15 +125,24 @@ export default function Stream(props) {
     room: "",
   });
 
+  const [postList, setPostList] = useState([]);
   useEffect(() => {
-    console.log(state.user);
+    // console.log(state.user);
     initiateSocket(props.classroom._id);
 
     loadOldComments((err, data) => {
-      if (err) return;
+      setPostList(data);
+      console.log(data);
+      return;
     });
 
     subscribeToComment((err, data) => {
+      setPost({
+        content: "",
+        user: "",
+        room: "",
+      });
+      setPostList((preList) => [...preList, data]);
       console.log(data);
     });
 
@@ -164,8 +174,8 @@ export default function Stream(props) {
                 {state.user.id == props.classroom.teacher?._id ? (
                   <>Class code: {props.classroom.joinId}</>
                 ) : (
-                  <></>
-                )}
+                    <></>
+                  )}
               </Typography>
             </CardContent>
           </Card>
@@ -193,10 +203,13 @@ export default function Stream(props) {
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   style={{ height: 60 }}>
-                  <Avatar
+                  {/* <Avatar
                     alt=""
                     src={require("../../../../assets/images/avatar.png")}
-                  />
+                  /> */}
+                  <Avatar style={{ backgroundColor: '#3c87c0' }} >
+                    {state.user.firstName.charAt(0)}
+                  </Avatar>
                   <Typography style={{ marginLeft: 12, paddingTop: 10 }}>
                     Announce something to your class
                   </Typography>
@@ -206,7 +219,8 @@ export default function Stream(props) {
                   <form
                     noValidate
                     onSubmit={handlePostSubmit}
-                    style={{ width: "100%" }}>
+                    style={{ width: "100%" }}
+                  >
                     <TextField
                       variant="outlined"
                       margin="normal"
@@ -220,6 +234,7 @@ export default function Stream(props) {
                       fullWidth
                       // autoComplete="email"
                       autoFocus
+                      value={post.content}
                       onChange={(e) =>
                         setPost({
                           ...post,
@@ -254,7 +269,13 @@ export default function Stream(props) {
             </Paper>
           </Grid>
 
-          <Grid item xs={12}>
+          {postList.slice(0).reverse().map((item, index) => (
+            <Grid item xs={12}>
+              <Post post={item} />
+            </Grid>
+          ))}
+
+          {/* <Grid item xs={12}>
             <Paper className={classes.paperRight}>
               <ListItem
                 button
@@ -265,7 +286,7 @@ export default function Stream(props) {
                 <ListItemText primary="Join class" />
               </ListItem>
             </Paper>
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12}>
             <Paper className={classes.paperRightBottom}>
@@ -288,18 +309,18 @@ export default function Stream(props) {
                   </div>
                 </>
               ) : (
-                <>
-                  <Typography variant="h5" component="h1">
-                    View class updates and connect with your class here
+                  <>
+                    <Typography variant="h5" component="h1">
+                      View class updates and connect with your class here
                   </Typography>
-                  <div className={classes.paperRightText}>
-                    <ChatIcon />
-                    <Typography component="p" style={{ marginLeft: 10 }}>
-                      See when new assignments are posted
+                    <div className={classes.paperRightText}>
+                      <ChatIcon />
+                      <Typography component="p" style={{ marginLeft: 10 }}>
+                        See when new assignments are posted
                     </Typography>
-                  </div>
-                </>
-              )}
+                    </div>
+                  </>
+                )}
             </Paper>
           </Grid>
         </Grid>

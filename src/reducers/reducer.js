@@ -2,7 +2,9 @@ export const initialState = {
   isSignIn: false,
   isLoading: true,
   isDarkMode: false,
-  user: {},
+  user: {
+    firstName: ''
+  },
 };
 
 export const ACTION_TYPE = {

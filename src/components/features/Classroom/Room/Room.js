@@ -128,6 +128,7 @@ export default function Room() {
   const match = useRouteMatch();
   const params = useParams();
   const [classroom, setClassroom] = useState([]);
+  const [studentList, setStudentList] = useState([]);
   useEffect(() => {
     if (state.isSignIn) {
       const fetchClassroom = async () => {
@@ -143,36 +144,18 @@ export default function Room() {
         }
       }
       fetchClassroom();
-      // console.log('2', classroom.title);
+      const studentList = async () => {
+        try {
+          const response = await axiosCodify.get(`/classrooms/${params.alias}/attend`);
+          setStudentList(response);
+        } catch (error) {
+          console.log('Error: ', error);
+        }
+      }
+      studentList();
     }
   }, [params.alias]);
 
-  //const [classroomList, setClassroomList] = useState([]);
-  // useEffect(() => {
-  //   if (state.isSignIn) {
-  //     const fetchClassroomList = async () => {
-  //     try {
-  //       const response = await axiosCodify.get('/classroom');
-  //       setClassroomList(response)
-  //       console.log('Fetch successfully: ', response);
-  //     } catch (error) {
-  //       console.log('Error: ', error);
-  //     }
-  //   }
-  //   fetchClassroomList();
-  //   }
-  // }, [state.isSignIn]);
-  // useEffect(() => {
-  //   const fetchClassroomList = async () => {
-  //     try {
-  //       const response = await axiosClient.get('/products');
-  //       console.log('Fetch successfully: ', response);
-  //     } catch (error) {
-  //       console.log('Error: ', error);
-  //     }
-  //   }
-  //   fetchClassroomList();
-  // }, []);
   return (
     <div className={classes.root}>
       <Toolbar className={clsx(classes.toolbarLight, state.isDarkMode && classes.toolbarDark)}>
@@ -222,9 +205,11 @@ export default function Room() {
             <Stream classroom={classroom} />
           </Route>
           <Route path={`${match.url}/exercises`}>
-            <Exercises alias={params.alias} classroom={classroom} />
+            <Exercises classroom={classroom} />
           </Route>
-          <Route path={`${match.url}/people`} component={People} />
+          <Route path={`${match.url}/people`}>
+            <People studentList={studentList} classroom={classroom} />
+          </Route>
           <Route path={`${match.url}/grades`} component={Grades} />
           <Route component={NotFound} />
         </SwitchRouter>

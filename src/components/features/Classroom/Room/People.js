@@ -1,12 +1,11 @@
-import { Paper } from '@material-ui/core';
+import { Avatar, Paper } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouteMatch } from "react-router-dom";
 import { useStateValue } from "../../../../context/StateProvider";
 
@@ -26,50 +25,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function People() {
+export default function People(props) {
   const classes = useStyles();
   const [state, dispatch] = useStateValue();
 
   const match = useRouteMatch();
 
-  const [classroomList, setClassroomList] = useState([]);
+  // const [studentList, setStudentList] = useState([]);
   // useEffect(() => {
   //   if (state.isSignIn) {
-  //     const fetchClassroomList = async () => {
-  //     try {
-  //       const response = await axiosCodify.get('/classroom');
-  //       setClassroomList(response)
-  //       console.log('Fetch successfully: ', response);
-  //     } catch (error) {
-  //       console.log('Error: ', error);
+  //     const studentList = async () => {
+  //       try {
+  //         const response = await axiosCodify.get(`/classrooms/${props.classroom.alias}/attend`);
+  //         setStudentList(response);
+  //       } catch (error) {
+  //         console.log('Error: ', error);
+  //       }
   //     }
-  //   }
-  //   fetchClassroomList();
+  //     studentList();
   //   }
   // }, [state.isSignIn]);
-  // useEffect(() => {
-  //   const fetchClassroomList = async () => {
-  //     try {
-  //       const response = await axiosClient.get('/products');
-  //       console.log('Fetch successfully: ', response);
-  //     } catch (error) {
-  //       console.log('Error: ', error);
-  //     }
-  //   }
-  //   fetchClassroomList();
-  // }, []);
   return (
     <div className={classes.root}>
-      {/* <SwitchRouter>
-              <Route exact path={match.url} />
-              <Route path={`${match.url}/a`} component={Detail} />
-              <Route path={`${match.url}/b`} component={Detail} />
-              <Route path={`${match.url}/c`} component={Detail} />
-              <Route path={`${match.url}/d`} component={Detail} />
-              <Route path={`${match.url}/e`} component={Detail} />
-              <Route component={NotFound} />
-            </SwitchRouter> */}
-      {/* <main className={classes.content}> */}
       <Paper className={classes.paper}>
         <List
           component="nav"
@@ -85,7 +62,10 @@ export default function People() {
         >
           <Divider />
           <ListItem>
-            <ListItemText primary="Miss Hello" />
+            <Avatar style={{ backgroundColor: '#3c87c0', marginRight: 12 }} >
+              {props.classroom.teacher?.firstName.charAt(0)}
+            </Avatar>
+            {props.classroom.teacher?.firstName} {props.classroom.teacher?.lastName}
           </ListItem>
         </List>
       </Paper>
@@ -104,18 +84,14 @@ export default function People() {
           className={classes.root}
         >
           <Divider />
-          <ListItem>
-            <ListItemText primary="Student A" />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Student B" />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Student C" />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Student D" />
-          </ListItem>
+          {props.studentList.map((item, index) => (
+            <ListItem>
+              <Avatar style={{ backgroundColor: '#3c87c0', marginRight: 12 }} >
+                {item.student.firstName.charAt(0)}
+              </Avatar>
+              {item.student.firstName} {item.student.lastName}
+            </ListItem>
+          ))}
         </List>
       </Paper>
     </div>

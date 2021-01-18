@@ -1,10 +1,8 @@
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Dialog from '@material-ui/core/Dialog';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
@@ -59,8 +57,11 @@ export default function SignUp() {
   const [message, setMessage] = useState(null);
   const [user, setUser] = useState({
     email: "",
+    firstName: "",
+    lastName: "",
     password: "",
     confirmPassword: "",
+    dateOfBirth: "1999-01-01",
   });
 
   const handleClickOpen = () => {
@@ -129,9 +130,8 @@ export default function SignUp() {
             {/* <Snackbar message={message} openSnackbar={openSnackbar}/> */}
             <form className={classes.form} noValidate onSubmit={handleSignUpSubmit}>
               <Grid container spacing={2}>
-                {/* <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <TextField
-                    autoComplete="fname"
                     name="firstName"
                     variant="outlined"
                     required
@@ -139,6 +139,8 @@ export default function SignUp() {
                     id="firstName"
                     label="First Name"
                     autoFocus
+                    // autoComplete="fname"
+                    onChange={e => setUser({ ...user, firstName: e.target.value })}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -149,9 +151,10 @@ export default function SignUp() {
                     id="lastName"
                     label="Last Name"
                     name="lastName"
-                    autoComplete="lname"
+                    // autoComplete="lname"
+                    onChange={e => setUser({ ...user, lastName: e.target.value })}
                   />
-                </Grid> */}
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     variant="outlined"
@@ -163,7 +166,6 @@ export default function SignUp() {
                     label="Email Address"
                     type="email"
                     // autoComplete="email"
-                    autoFocus
                     onChange={e => setUser({ ...user, email: e.target.value })}
                   />
                 </Grid>
@@ -195,12 +197,12 @@ export default function SignUp() {
                     onChange={e => setUser({ ...user, confirmPassword: e.target.value })}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <FormControlLabel
                     control={<Checkbox value="allowExtraEmails" color="primary" />}
                     label="I want to receive inspiration, marketing promotions and updates via email."
                   />
-                </Grid>
+                </Grid> */}
               </Grid>
               <Button
                 type="submit"

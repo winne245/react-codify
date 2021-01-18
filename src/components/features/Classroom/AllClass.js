@@ -90,81 +90,130 @@ export default function AllClass(props) {
       ) : (
           <>
             <main className={classes.content}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                indicatorColor="primary"
-                textColor="primary"
-                className={classes.contentTitle}
-              >
-                <Tab label="Teaching" />
-                <Tab label="Enrolled" />
-              </Tabs>
-              <TabPanel value={value} index={0}>
-                {props.createdClassroom.map((item, index) => (
-                  <div key={item._id} className={classes.card}>
-                    <Card
-                      to={`${match.url}/${item.alias}/stream`}
-                      component={Link}
-                      style={{ textDecoration: 'none' }}
+              {state.user.role == 'teacher' ? (
+                <>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    className={classes.contentTitle}
+                  >
+                    <Tab label="Teaching" />
+                    <Tab label="Enrolled" />
+                  </Tabs>
+                  <TabPanel value={value} index={0}>
+                    {props.createdClassroom.map((item, index) => (
+                      <div key={item._id} className={classes.card}>
+                        <Card
+                          to={`${match.url}/${item.alias}/stream`}
+                          component={Link}
+                          style={{ textDecoration: 'none' }}
+                        >
+                          <CardActionArea>
+                            <CardMedia
+                              component="img"
+                              alt="Contemplative Reptile"
+                              height="140"
+                              image={require('../../../assets/images/classroom.jpg')}
+                              title="Contemplative Reptile"
+                            />
+                            <Typography variant="body2" color="textSecondary" component="p" className={classes.cardTeacher} >
+                              <strong>{item.teacher.firstName}  {item.teacher.lastName}</strong>
+                            </Typography>
+                            <CardContent className={classes.cardContent}>
+                              <Typography variant="h5" component="h2" className={classes.cardTitleContent}>
+                                {item.title}
+                              </Typography>
+                              <Typography variant="body2" color="textSecondary" component="p" className={classes.cardDescriptionContent}>
+                                {item.description}
+                              </Typography>
+                            </CardContent>
+                          </CardActionArea>
+                        </Card>
+                      </div>
+                    ))}
+                  </TabPanel>
+                  <TabPanel value={value} index={1}>
+                    {props.attendedClassroom.map((item, index) => (
+                      <div key={item._id} className={classes.card}>
+                        <Card
+                          to={`${match.url}/${item.classroom.alias}/stream`}
+                          component={Link}
+                          style={{ textDecoration: 'none' }}
+                        >
+                          <CardActionArea>
+                            <CardMedia
+                              component="img"
+                              alt
+                              ="Contemplative Reptile"
+                              height="140"
+                              image={require('../../../assets/images/classroom.jpg')}
+                              title="Contemplative Reptile"
+                            />
+                            <Typography variant="body2" color="textSecondary" component="p" className={classes.cardTeacher} >
+                              <strong>{item.classroom.teacher.firstName}  {item.classroom.teacher.lastName}</strong>
+                            </Typography>
+                            <CardContent className={classes.cardContent}>
+                              <Typography variant="h5" component="h2" className={classes.cardTitleContent}>
+                                {item.classroom.title}
+                              </Typography>
+                              <Typography variant="body2" color="textSecondary" component="p" className={classes.cardDescriptionContent}>
+                                {item.classroom.description}
+                              </Typography>
+                            </CardContent>
+                          </CardActionArea>
+                        </Card>
+                      </div>
+                    ))}
+                  </TabPanel>
+                </>
+              ) : (
+                  <>
+                    <Tabs
+                      value={value}
+                      onChange={handleChange}
+                      indicatorColor="primary"
+                      textColor="primary"
+                      className={classes.contentTitle}
                     >
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          alt="Contemplative Reptile"
-                          height="140"
-                          image={require('../../../assets/images/classroom.jpg')}
-                          title="Contemplative Reptile"
-                        />
-                        <Typography variant="body2" color="textSecondary" component="p" className={classes.cardTeacher} >
-                          <strong>{item.teacher.firstName}  {item.teacher.lastName}</strong>
-                        </Typography>
-                        <CardContent className={classes.cardContent}>
-                          <Typography variant="h5" component="h2" className={classes.cardTitleContent}>
-                            {item.title}
-                          </Typography>
-                          <Typography variant="body2" color="textSecondary" component="p" className={classes.cardDescriptionContent}>
-                            {item.description}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </div>
-                ))}
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                {props.attendedClassroom.map((item, index) => (
-                  <div key={item._id} className={classes.card}>
-                    <Card
-                      to={`${match.url}/${item.classroom.alias}/stream`}
-                      component={Link}
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          alt
-                          ="Contemplative Reptile"
-                          height="140"
-                          image={require('../../../assets/images/classroom.jpg')}
-                          title="Contemplative Reptile"
-                        />
-                        <Typography variant="body2" color="textSecondary" component="p" className={classes.cardTeacher} >
-                          <strong>{item.classroom.teacher.firstName}  {item.classroom.teacher.lastName}</strong>
-                        </Typography>
-                        <CardContent className={classes.cardContent}>
-                          <Typography variant="h5" component="h2" className={classes.cardTitleContent}>
-                            {item.classroom.title}
-                          </Typography>
-                          <Typography variant="body2" color="textSecondary" component="p" className={classes.cardDescriptionContent}>
-                            {item.classroom.description}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </div>
-                ))}
-              </TabPanel>
+                      <Tab label="Enrolled" />
+                    </Tabs>
+                    <TabPanel value={value} index={0}>
+                      {props.attendedClassroom.map((item, index) => (
+                        <div key={item._id} className={classes.card}>
+                          <Card
+                            to={`${match.url}/${item.classroom.alias}/stream`}
+                            component={Link}
+                            style={{ textDecoration: 'none' }}
+                          >
+                            <CardActionArea>
+                              <CardMedia
+                                component="img"
+                                alt
+                                ="Contemplative Reptile"
+                                height="140"
+                                image={require('../../../assets/images/classroom.jpg')}
+                                title="Contemplative Reptile"
+                              />
+                              <Typography variant="body2" color="textSecondary" component="p" className={classes.cardTeacher} >
+                                <strong>{item.classroom.teacher.firstName}  {item.classroom.teacher.lastName}</strong>
+                              </Typography>
+                              <CardContent className={classes.cardContent}>
+                                <Typography variant="h5" component="h2" className={classes.cardTitleContent}>
+                                  {item.classroom.title}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p" className={classes.cardDescriptionContent}>
+                                  {item.classroom.description}
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                          </Card>
+                        </div>
+                      ))}
+                    </TabPanel>
+                  </>
+                )}
             </main>
           </>
         )}

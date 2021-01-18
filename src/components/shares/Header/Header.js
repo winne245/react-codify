@@ -288,7 +288,10 @@ function Header() {
                     onClick={handleMenu}
                     color="inherit"
                   >
-                    <Avatar alt="" src={require('../../../assets/images/avatar.png')} />
+                    <Avatar style={{ backgroundColor: '#3c87c0', height: 32, width: 32 }} >
+                      {state.user.firstName.charAt(0)}
+                    </Avatar>
+                    {/* <Avatar alt="" src={require('../../../assets/images/avatar.png')} /> */}
                     {/* <Avatar alt="" src={firebase.auth().currentUser.photoURL} /> */}
                   </IconButton>
 
