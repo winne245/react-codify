@@ -20,7 +20,7 @@ import axiosCodify from "../../../../api/axios";
 import { useStateValue } from "../../../../context/StateProvider";
 import AceTextEditor from "./AceEditor";
 
-export const defaultDrawerWidth = 550;
+export const defaultDrawerWidth = 620;
 const minDrawerWidth = 70;
 const maxDrawerWidth = 1470;
 
@@ -435,7 +435,15 @@ export default function Code(props) {
               </select>
             </div>
             <main>
-              <AceTextEditor drawerHeight={drawerHeight} onChangeCode={onChangeCode} exerciseResultCode={props.exerciseResultCode} />
+              {(props.result == null) ? (
+                <>
+                  <AceTextEditor drawerHeight={drawerHeight} onChangeCode={onChangeCode} exerciseResultCode="" />
+                </>
+              ) : (
+                  <>
+                    <AceTextEditor drawerHeight={drawerHeight} onChangeCode={onChangeCode} exerciseResultCode={props.result.studentCode} />
+                  </>
+                )}
               <div onMouseDown={(e) => handleMouseDown1(e)} className={classes.draggerHeight}>
                 <IconButton
                   size="small"

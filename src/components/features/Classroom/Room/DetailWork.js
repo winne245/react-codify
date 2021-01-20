@@ -11,6 +11,7 @@ import { useParams, useRouteMatch } from "react-router-dom";
 import axiosCodify from '../../../../api/axios';
 import { useStateValue } from "../../../../context/StateProvider";
 import Code from './Code';
+import StudentWork from './StudentWork';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -98,9 +99,9 @@ export default function DetailWork() {
       }
       fetchExercise();
     }
-  }, [open]);
+  }, [open, state.isSignIn]);
   const [exerciseResult, setExerciseResult] = useState([]);
-  const [exerciseResultCode, setExerciseResultCode] = useState();
+  // const [exerciseResultCode, setExerciseResultCode] = useState();
   useEffect(() => {
     if (state.isSignIn) {
       const fetchExerciseResult = async () => {
@@ -113,17 +114,42 @@ export default function DetailWork() {
       }
       fetchExerciseResult();
     }
-  }, [open]);
+  }, [open, exercise, state.isSignIn]);
 
+  const [result, setResult] = useState(null);
+  // useEffect(() => {
+  //   exerciseResult.forEach(function (item, index) {
+  //     if (item.student._id === state.user.id) {
+  //       setResult(item)
+  //     }
+  //   })
+  // }, [exerciseResult, state.isSignIn]);
   useEffect(() => {
     exerciseResult.map((item, index) => (
-      setExerciseResultCode(item.studentCode)
-    ));
+      item.student._id == state.user.id) ? (
+        setResult(item)
+      ) : (
+        <></>
+      ));
+    console.log('result: ', result);
   }, [exerciseResult]);
 
-  const viewAll = (newValue) => {
-    console.log('dsadasddss', exerciseResultCode)
+  const resultLOL = () => {
+    console.log('resultNe: ', result);
   };
+
+  const [studentList, setStudentList] = useState([]);
+  useEffect(() => {
+    const studentList = async () => {
+      try {
+        const response = await axiosCodify.get(`/classrooms/${exercise.classroom?.alias}/attend`);
+        setStudentList(response);
+      } catch (error) {
+        console.log('Error: ', error);
+      }
+    }
+    studentList();
+  }, [exercise]);
 
 
   const [post, setPost] = useState({
@@ -132,19 +158,6 @@ export default function DetailWork() {
   const handlePostSubmit = (e) => {
     e.preventDefault();
     window.alert(post.content);
-    // const signIn = async () => {
-    //   try {
-    //     const response = await axiosCodify.post('/signin', user);
-    //     if (response.accessToken) {
-    //       localStorage.setItem("accessToken", response.accessToken);
-    //       dispatch({ type: ACTION_TYPE.SIGN_IN });
-    //       // window.location.reload();
-    //     }
-    //   } catch (error) {
-    //     console.log('Error: ', error);
-    //   }
-    // }
-    // signIn();
   };
 
   return (
@@ -165,25 +178,44 @@ export default function DetailWork() {
               <strong>{exercise.title}</strong>
             </Typography>
             <Typography component="p">
-              {exercise.creator?.firstName} {exercise.creator?.lastName} - {new Date(exercise.createAt).toLocaleString()}
+              <strong>{exercise.creator?.firstName} {exercise.creator?.lastName}</strong> - {new Date(exercise.createAt).toLocaleString()}
             </Typography>
             <Typography component="p">
-              {(exerciseResult.length == 0) ? (
+              {(state.user.id == exercise.creator?._id) ? (
+                <>
+                  100 point
+                </>
+              ) : (
+                  <>
+                    {(result == null) ? (
+                      <>
+                        0/{exercise.point} point
+                      </>
+                    ) : (
+                        <>
+                          {result.score}/{exercise.point} point
+                        </>
+                      )}
+                  </>
+                )}
+              {/* {(exerciseResult.length == 0) ? (
                 <>
                   0/{exercise.point}
                 </>
               ) : (
                   <>
                     {exerciseResult.map((item, index) => (
-                      <>
-                        {item.score}/{exercise.point}
-                      </>
-                    ))}
+                      item.student._id === state.user.id) ? (
+                        <>{item.score}/{exercise.point}</>
+                      ) : (
+                        <>
+                        </>
+                      ))}
                   </>
-                )}
+                )} */}
             </Typography>
             <Typography component="p">
-              Due {new Date(exercise.expiredTime).toLocaleString()}
+              <strong>Due:</strong> {new Date(exercise.expiredTime).toLocaleString()}
             </Typography>
           </Paper>
           <Paper className={classes.paperLeftComment}>
@@ -240,18 +272,48 @@ export default function DetailWork() {
           </Paper>
         </Grid>
         <Grid item xs={4}>
-          <Paper className={classes.paperRight}>
-            <Typography gutterBottom variant="h5" component="h1">
-              Your work
-            </Typography>
-            <Typography component="p" color="secondary">
-              {(exerciseResult.length == 0) ? (
+          {(state.user.id == exercise.creator?._id) ? (
+            <>
+              <Paper className={classes.paperRight}>
+                <Typography gutterBottom variant="h5" component="h1">
+                  Students work
+                </Typography>
+                <StudentWork
+                  exercise={exercise}
+                  exerciseResult={exerciseResult}
+                  studentList={studentList}
+                // callbackOpen={callbackOpen}
+                />
+              </Paper></>
+          ) : (
+              <>
+                <Paper className={classes.paperRight}>
+                  <Typography gutterBottom variant="h5" component="h1">
+                    Your work
+                  </Typography>
+                  <Typography component="p" color="secondary">
+                    {(result == null) ? (
+                      <>
+                        Unfinished
+                      </>
+                    ) : (
+                        (result.isLate) ? (
+                          <>
+                            Late - {new Date(result.submitTime).toLocaleString()}
+                          </>
+                        ) : (
+                            <>
+                              Finished - {new Date(result.submitTime).toLocaleString()}
+                            </>
+                          ))}
+
+                    {/* {(result.length == 0) ? (
                 <>
                   Unfinished
                 </>
               ) : (
                   <>
-                    {exerciseResult.map((item, index) => (
+                    {result.map((item, index) => (
                       (item.isLate) ? (
                         <>
                           Late
@@ -263,25 +325,15 @@ export default function DetailWork() {
                         )
                     ))}
                   </>
-                )}
-            </Typography>
-            {/* <Button
-              // type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              style={{ marginTop: 12 }}
-            >
-              work
-            </Button> */}
-            <Code
-              exercise={exercise}
-              exerciseResultCode={exerciseResultCode}
-              callbackOpen={callbackOpen}
-            />
-          </Paper>
-          {/* <Paper className={classes.paperRightComment}>
+                )} */}
+                  </Typography>
+                  <Code
+                    exercise={exercise}
+                    result={result}
+                    callbackOpen={callbackOpen}
+                  />
+                </Paper>
+                {/* <Paper className={classes.paperRightComment}>
             <Accordion >
               <AccordionSummary expandIcon={<ExpandMoreIcon />} style={{ height: 60 }}>
                 <Avatar alt="" src={require('../../../../assets/images/avatar.png')} />
@@ -330,22 +382,8 @@ export default function DetailWork() {
               </AccordionDetails>
             </Accordion>
           </Paper> */}
-          <Paper className={classes.paperRight}>
-            <Typography gutterBottom variant="h5" component="h1">
-              Students work
-            </Typography>
-            <Button
-              // type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={viewAll}
-              className={classes.submit}
-              style={{ marginTop: 12 }}
-            >
-              View all students work
-            </Button>
-          </Paper>
+              </>
+            )}
         </Grid>
       </Grid>
     </div>

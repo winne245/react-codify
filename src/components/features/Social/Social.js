@@ -1,3 +1,4 @@
+import { CardMedia } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import InputBase from "@material-ui/core/InputBase";
@@ -127,125 +128,141 @@ export default function Social() {
   return (
     <div className={classes.root}>
       {!state.isSignIn ? (
-        <main className={classes.content}>This is Social</main>
+        <main className={classes.content}>
+          <CardMedia
+            component="img"
+            className={classes.cardMedia}
+            image={require("../../../assets/images/Capture.PNG")}
+          />
+        </main>
       ) : (
-        <>
-          <SwitchRouter>
-            <Route exact path={match.url} component={Detail} />
-            <Route path={`${match.url}/a`} component={Detail} />
-            <Route path={`${match.url}/b`} component={Detail} />
-            <Route path={`${match.url}/c`} component={Detail} />
-            <Route path={`${match.url}/d`} component={Detail} />
-            <Route component={NotFound} />
-          </SwitchRouter>
+          <>
+            <SwitchRouter>
+              <Route exact path={match.url} component={Detail} />
+              <Route path={`${match.url}/a`} component={Detail} />
+              <Route path={`${match.url}/b`} component={Detail} />
+              <Route path={`${match.url}/c`} component={Detail} />
+              <Route path={`${match.url}/d`} component={Detail} />
+              <Route component={NotFound} />
+            </SwitchRouter>
 
-          <Drawer
-            className={classes.drawer}
-            variant="permanent"
-            classes={{
-              paper: classes.drawerPaper,
-            }}>
-            <Toolbar />
-            <div className={classes.drawerContainer}>
-              <ListItem>
-                <Typography variant="h5" style={{ fontWeight: 500 }}>
-                  Practice
+            <Drawer
+              className={classes.drawer}
+              variant="permanent"
+              classes={{
+                paper: classes.drawerPaper,
+              }}>
+              <Toolbar />
+              <div className={classes.drawerContainer}>
+                <ListItem>
+                  <Typography variant="h5" style={{ fontWeight: 500 }}>
+                    Practice
                 </Typography>
-              </ListItem>
+                </ListItem>
 
-              <Divider />
-              <div className={classes.space} />
-              <ListItem
-                className={clsx(
-                  classes.sidebarLightItemSearch,
-                  state.isDarkMode && classes.sidebarDarkItemSearch
-                )}>
-                <SearchIcon className={classes.sidebarItemSearchIcon} />
-                <InputBase
-                  placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </ListItem>
-              <div className={classes.space} />
+                <Divider />
+                <div className={classes.space} />
+                <ListItem
+                  className={clsx(
+                    classes.sidebarLightItemSearch,
+                    state.isDarkMode && classes.sidebarDarkItemSearch
+                  )}>
+                  <SearchIcon className={classes.sidebarItemSearchIcon} />
+                  <InputBase
+                    placeholder="Search…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    inputProps={{ "aria-label": "search" }}
+                  />
+                </ListItem>
+                <div className={classes.space} />
 
-              <Divider />
-              <ListSubheader inset className={classes.myClassTitle}>
-                Status
+                <Divider />
+                <ListSubheader inset className={classes.myClassTitle}>
+                  Status
               </ListSubheader>
-              <ListItem
-                button
-                to={`${match.url}/a`}
-                component={NavLink}
-                className={classes.sidebarItem}
-                activeClassName={clsx(
-                  classes.listItemLightActive,
-                  state.isDarkMode && classes.listItemDarkActive
-                )}>
-                <DoneIcon className={classes.iconSidebar} />
-                <ListItemText primary="Complete" />
-              </ListItem>
-              <ListItem
-                button
-                to={`${match.url}/b`}
-                component={NavLink}
-                className={classes.sidebarItem}
-                activeClassName={clsx(
-                  classes.listItemLightActive,
-                  state.isDarkMode && classes.listItemDarkActive
-                )}>
-                <CloseIcon className={classes.iconSidebar} />
-                <ListItemText primary="Incomplete" />
-              </ListItem>
-              <div className={classes.space} />
+                <ListItem
+                  button
+                  to={`${match.url}/a`}
+                  component={NavLink}
+                  className={classes.sidebarItem}
+                  activeClassName={clsx(
+                    classes.listItemLightActive,
+                    state.isDarkMode && classes.listItemDarkActive
+                  )}>
+                  <DoneIcon className={classes.iconSidebar} />
+                  <ListItemText primary="Complete" />
+                </ListItem>
+                <ListItem
+                  button
+                  to={`${match.url}/b`}
+                  component={NavLink}
+                  className={classes.sidebarItem}
+                  activeClassName={clsx(
+                    classes.listItemLightActive,
+                    state.isDarkMode && classes.listItemDarkActive
+                  )}>
+                  <CloseIcon className={classes.iconSidebar} />
+                  <ListItemText primary="Incomplete" />
+                </ListItem>
+                <div className={classes.space} />
 
-              <Divider />
-              <ListSubheader inset className={classes.myClassTitle}>
-                Level
+                <Divider />
+                <ListSubheader inset className={classes.myClassTitle}>
+                  Level
               </ListSubheader>
-              <ListItem
-                button
-                to={`${match.url}/c`}
-                component={NavLink}
-                className={classes.sidebarItem}
-                activeClassName={clsx(
-                  classes.listItemLightActive,
-                  state.isDarkMode && classes.listItemDarkActive
-                )}>
-                <BatteryCharging50Icon className={classes.iconSidebar} />
-                <ListItemText primary="Easy" />
-              </ListItem>
-              <ListItem
-                button
-                to={`${match.url}/d`}
-                component={NavLink}
-                className={classes.sidebarItem}
-                activeClassName={clsx(
-                  classes.listItemLightActive,
-                  state.isDarkMode && classes.listItemDarkActive
-                )}>
-                <BatteryCharging80Icon className={classes.iconSidebar} />
-                <ListItemText primary="Medium" />
-              </ListItem>
-              <ListItem
-                button
-                to={`${match.url}/e`}
-                component={NavLink}
-                className={classes.sidebarItem}
-                activeClassName={clsx(
-                  classes.listItemLightActive,
-                  state.isDarkMode && classes.listItemDarkActive
-                )}>
-                <BatteryChargingFullIcon className={classes.iconSidebar} />
-                <ListItemText primary="hard" />
-              </ListItem>
-            </div>
-          </Drawer>
-          {/* <main className={classes.content}>
-            <Card className={classes.card}>
+                <ListItem
+                  button
+                  to={`${match.url}/c`}
+                  component={NavLink}
+                  className={classes.sidebarItem}
+                  activeClassName={clsx(
+                    classes.listItemLightActive,
+                    state.isDarkMode && classes.listItemDarkActive
+                  )}>
+                  <BatteryCharging50Icon className={classes.iconSidebar} />
+                  <ListItemText primary="Easy" />
+                </ListItem>
+                <ListItem
+                  button
+                  to={`${match.url}/d`}
+                  component={NavLink}
+                  className={classes.sidebarItem}
+                  activeClassName={clsx(
+                    classes.listItemLightActive,
+                    state.isDarkMode && classes.listItemDarkActive
+                  )}>
+                  <BatteryCharging80Icon className={classes.iconSidebar} />
+                  <ListItemText primary="Medium" />
+                </ListItem>
+                <ListItem
+                  button
+                  to={`${match.url}/e`}
+                  component={NavLink}
+                  className={classes.sidebarItem}
+                  activeClassName={clsx(
+                    classes.listItemLightActive,
+                    state.isDarkMode && classes.listItemDarkActive
+                  )}>
+                  <BatteryChargingFullIcon className={classes.iconSidebar} />
+                  <ListItemText primary="hard" />
+                </ListItem>
+              </div>
+            </Drawer>
+            <main className={classes.content}>
+              <CardMedia
+                component="img"
+                className={classes.cardMedia}
+                image={require("../../../assets/images/Capture6.PNG")}
+              />
+              <CardMedia
+                component="img"
+                className={classes.cardMedia}
+                image={require("../../../assets/images/Capture7.PNG")}
+              />
+              {/* <Card className={classes.card}>
               <CardActionArea>
                 <CardMedia
                   component="img"
@@ -284,10 +301,10 @@ export default function Social() {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-            </Card>
-          </main> */}
-        </>
-      )}
+            </Card> */}
+            </main>
+          </>
+        )}
     </div>
   );
 }

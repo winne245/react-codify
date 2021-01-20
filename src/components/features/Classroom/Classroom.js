@@ -1,3 +1,4 @@
+import { CardMedia } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -134,8 +135,17 @@ export default function Classroom() {
   return (
     <div className={classes.root}>
       {!state.isSignIn ? (
-        <main className={classes.content}>
-          This is Classrooms
+        <main>
+          <CardMedia
+            component="img"
+            className={classes.cardMedia}
+            image={require("../../../assets/images/Capture1.PNG")}
+          />
+          <CardMedia
+            component="img"
+            className={classes.cardMedia}
+            image={require("../../../assets/images/Capture1.1.PNG")}
+          />
         </main>
       ) : (
           <>
@@ -270,7 +280,8 @@ export default function Classroom() {
               </SwitchRouter>
             </main>
           </>
-        )}
+        )
+      }
     </div>
   );
 }

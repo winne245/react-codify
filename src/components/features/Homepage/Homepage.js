@@ -1,3 +1,4 @@
+import { CardMedia } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    paddingLeft: theme.spacing(37.5),
   },
   card: {
     maxWidth: 300,
@@ -70,8 +71,12 @@ export default function Homepage() {
   return (
     <div className={classes.root}>
       {!state.isSignIn ? (
-        <main className={classes.content}>
-          This is Homepage
+        <main>
+          <CardMedia
+            component="img"
+            className={classes.cardMedia}
+            image={require("../../../assets/images/Capture.PNG")}
+          />
         </main>
       ) : (
           <>
@@ -86,7 +91,10 @@ export default function Homepage() {
               <div className={classes.drawerContainer}>
                 <ListItem button>
                   <ListItemIcon>
-                    <Avatar alt="" src={require('../../../assets/images/avatar.png')} />
+                    {/* <Avatar alt="" src={require('../../../assets/images/avatar.png')} /> */}
+                    <Avatar style={{ backgroundColor: '#3c87c0', height: 32, width: 32 }} >
+                      {state.user.firstName.charAt(0)}
+                    </Avatar>
                     {/* <Avatar alt="" src={firebase.auth().currentUser.photoURL} /> */}
                   </ListItemIcon>
                   <Typography variant="h6" style={{ fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -129,12 +137,21 @@ export default function Homepage() {
               </div>
             </Drawer>
             <main className={classes.content}>
-              This is Homepage
-          {/* <ul>
-            {productList.map(product  => (
-              <li key={product.id}>{product.name}</li>
-            ))}
-          </ul> */}
+              <CardMedia
+                component="img"
+                className={classes.cardMedia}
+                image={require("../../../assets/images/Capture4.PNG")}
+              />
+              <CardMedia
+                component="img"
+                className={classes.cardMedia}
+                image={require("../../../assets/images/Capture2.PNG")}
+              />
+              <CardMedia
+                component="img"
+                className={classes.cardMedia}
+                image={require("../../../assets/images/Capture3.PNG")}
+              />
             </main>
           </>
         )}

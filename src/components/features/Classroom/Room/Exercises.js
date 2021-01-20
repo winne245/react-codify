@@ -89,7 +89,7 @@ export default function Exercises(props) {
                 <Divider />
                 <AccordionDetails style={{ paddingTop: 0 }}>
                   <form noValidate style={{ width: '100%' }}>
-                    <TextField
+                    {/* <TextField
                       variant="outlined"
                       margin="normal"
                       required
@@ -103,7 +103,7 @@ export default function Exercises(props) {
                       // autoComplete="email"
                       autoFocus
                     // onChange={e => setPost({ ...post, content: e.target.value })}
-                    />
+                    /> */}
                     <div className={classes.submitArea}>
                       <Button
                         // type="submit"
@@ -111,6 +111,7 @@ export default function Exercises(props) {
                         color="primary"
                         component={Link}
                         to={`${match.url}/${item._id}`}
+                        style={{marginTop: 16}}
                         className={classes.submit}
                       >
                         {/* <AttachFileIcon style={{ height: 20, marginLeft: -10 }} /> */}

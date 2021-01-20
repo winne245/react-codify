@@ -57,8 +57,8 @@ function App() {
       const authenticate = async () => {
         try {
           const response = await axiosCodify.get("/authenticate");
-          dispatch({ type: ACTION_TYPE.SIGN_IN });
           dispatch({ type: ACTION_TYPE.USER, payload: response });
+          dispatch({ type: ACTION_TYPE.SIGN_IN });
         } catch (error) {
           localStorage.removeItem("accessToken");
         }

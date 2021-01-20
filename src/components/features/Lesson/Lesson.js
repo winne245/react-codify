@@ -1,3 +1,4 @@
+import { CardMedia } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import InputBase from '@material-ui/core/InputBase';
@@ -120,7 +121,11 @@ export default function Lesson() {
     <div className={classes.root}>
       {!state.isSignIn ? (
         <main className={classes.content}>
-          This is Lesson
+          <CardMedia
+            component="img"
+            className={classes.cardMedia}
+            image={require("../../../assets/images/Capture.PNG")}
+          />
         </main>
       ) : (
           <>
@@ -214,8 +219,17 @@ export default function Lesson() {
               </div>
             </Drawer>
             <main className={classes.content}>
-              This is Lesson
-            {/* <Card className={classes.card}>
+              <CardMedia
+                component="img"
+                className={classes.cardMedia}
+                image={require("../../../assets/images/Capture6.PNG")}
+              />
+              <CardMedia
+                component="img"
+                className={classes.cardMedia}
+                image={require("../../../assets/images/Capture7.PNG")}
+              />
+              {/* <Card className={classes.card}>
               <CardActionArea>
                 <CardMedia
                   component="img"
