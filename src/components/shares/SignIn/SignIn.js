@@ -1,18 +1,18 @@
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Dialog from '@material-ui/core/Dialog';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React, { useState } from 'react';
-import axiosCodify from '../../../api/axios';
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Dialog from "@material-ui/core/Dialog";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import React, { useState } from "react";
+import axiosCodify from "../../../api/axios";
 import { useStateValue } from "../../../context/StateProvider";
 import { ACTION_TYPE } from "../../../reducers/reducer";
 
@@ -20,16 +20,16 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     margin: theme.spacing(3),
     marginBottom: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -70,22 +70,21 @@ export default function SignIn() {
     setOpen(false);
   };
 
-
   const handleSignInSubmit = (e) => {
     e.preventDefault();
     const signIn = async () => {
       try {
-        const response = await axiosCodify.post('/signin', user);
+        const response = await axiosCodify.post("/signin", user);
         localStorage.setItem("accessToken", response.accessToken);
         // const decoded = jwt_decode(response.accessToken);
         // state.user = decoded.payload;
         // console.log(state.user)
         dispatch({ type: ACTION_TYPE.SIGN_IN });
       } catch (error) {
-        console.log('Error: ', error);
+        console.log("Error: ", error);
       }
-    }
-    signIn();;
+    };
+    signIn();
   };
 
   return (
@@ -97,8 +96,7 @@ export default function SignIn() {
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
+        aria-describedby="alert-dialog-description">
         <Container component="main" maxWidth="xl">
           <CssBaseline />
           <div className={classes.paper}>
@@ -109,7 +107,10 @@ export default function SignIn() {
               Sign In
             </Typography>
             {/* <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/> */}
-            <form className={classes.form} noValidate onSubmit={handleSignInSubmit}>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={handleSignInSubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -121,7 +122,7 @@ export default function SignIn() {
                 type="email"
                 // autoComplete="email"
                 autoFocus
-                onChange={e => setUser({ ...user, email: e.target.value })}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
               <TextField
                 variant="outlined"
@@ -133,16 +134,18 @@ export default function SignIn() {
                 label="Password"
                 type="password"
                 // autoComplete="current-password"
-                onChange={e => setUser({ ...user, password: e.target.value })}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
               />
               <FormControlLabel
-                control={<Checkbox
-                  color="primary"
-                  onChange={e => {
-                    console.log(e.target.checked);
-                    setIsChecked({ isChecked: e.target.checked });
-                  }}
-                />}
+                control={
+                  <Checkbox
+                    color="primary"
+                    onChange={(e) => {
+                      console.log(e.target.checked);
+                      setIsChecked({ isChecked: e.target.checked });
+                    }}
+                  />
+                }
                 label="Remember me"
               />
               <Button
@@ -151,7 +154,7 @@ export default function SignIn() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-              // onClick={handleSignInSubmit}
+                // onClick={handleSignInSubmit}
               >
                 Sign In
               </Button>

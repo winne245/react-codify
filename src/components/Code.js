@@ -1,17 +1,17 @@
-import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import clsx from 'clsx';
+import AppBar from "@material-ui/core/AppBar";
+import Badge from "@material-ui/core/Badge";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Drawer from "@material-ui/core/Drawer";
+import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import clsx from "clsx";
 import React, { useCallback } from "react";
 import AceTextEditor from "./AceEditor";
-import SidebarList from './Code-Sidebar';
+import SidebarList from "./Code-Sidebar";
 
 export const defaultDrawerWidth = 600;
 const minDrawerWidth = 75;
@@ -32,27 +32,27 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
     zIndex: 100,
-    backgroundColor: "#f4f7f9"
+    backgroundColor: "#f4f7f9",
   },
 
   root: {
-    display: 'flex',
+    display: "flex",
   },
   toolbar: {
     marginTop: -10,
     paddingRight: 24, // keep right padding when drawer closed
   },
   toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 8px",
     ...theme.mixins.toolbar,
   },
   appBar: {
     height: 45,
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -68,9 +68,8 @@ const useStyles = makeStyles((theme) => ({
   //   flexGrow: 1,
   // },
   drawerPaper: {
-    position: 'relative',
-    flexDirection: 'row',
-
+    position: "relative",
+    flexDirection: "row",
   },
   // drawerPaperClose: {
   //   overflowX: 'hidden',
@@ -84,8 +83,8 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
+    height: "100vh",
+    overflow: "auto",
   },
   // container: {
   //   paddingTop: theme.spacing(4),
@@ -129,14 +128,15 @@ export default function Code() {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-          >
+          <IconButton edge="start" color="inherit" aria-label="open drawer">
             <ChevronLeftIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}>
             Dashboard
           </Typography>
           <IconButton color="inherit">
@@ -148,78 +148,45 @@ export default function Code() {
       </AppBar>
       <Drawer
         variant="permanent"
-        classes={{paper: clsx(classes.drawerPaper),}}
-        PaperProps={{ style: { width: drawerWidth }}}
-      >
+        classes={{ paper: clsx(classes.drawerPaper) }}
+        PaperProps={{ style: { width: drawerWidth } }}>
         <div className={classes.toolbar1} />
         <div
           onMouseDown={(e) => handleMouseDown(e)}
           className={classes.dragger}
         />
-        <SidebarList/>
+        <SidebarList />
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
 
-            <p>Tiếng ViệtCho 2 số rất lớn a và b thể hiện bằng 2 xâu kí tự
-
-              Hãy đưa ra tích của 2 số trên
-
-              Các ngôn ngữ đều hỗ trợ bigInt, vì vậy bài này chỉ hỗ trợ ngôn ngữ C++
-
-              Ví dụ:
-
-              Với a = "12", b = "11", thì bigintProduct(a, b) = "132"
-              Đầu vào, đầu ra:
-
-              Đầu vào: string a, b
-              Guaranteed constraints:
-              Đầu ra: string 
-              Tích của 2 số a và b
-              Nếu bạn chưa biết cách nộp bài trên hệ thống thì có thể đọc phần câu hỏi tại đây.
-              
-              Hãy đưa ra tích của 2 số trên
-
-              Các ngôn ngữ đều hỗ trợ bigInt, vì vậy bài này chỉ hỗ trợ ngôn ngữ C++
-
-              Ví dụ:
-
-              Với a = "12", b = "11", thì bigintProduct(a, b) = "132"
-              Đầu vào, đầu ra:
-
-              Đầu vào: string a, b
-              Guaranteed constraints:
-              Đầu ra: string 
-              Tích của 2 số a và b
-              Nếu bạn chưa biết cách nộp bài trên hệ thống thì có thể đọc phần câu hỏi tại đây.
-              
-              Hãy đưa ra tích của 2 số trên
-
-              Các ngôn ngữ đều hỗ trợ bigInt, vì vậy bài này chỉ hỗ trợ ngôn ngữ C++
-
-              Ví dụ:
-
-              Với a = "12", b = "11", thì bigintProduct(a, b) = "132"
-              Đầu vào, đầu ra:
-
-              Đầu vào: string a, b
-              Guaranteed constraints:
-              Đầu ra: string 
-              Tích của 2 số a và b
-              Nếu bạn chưa biết cách nộp bài trên hệ thống thì có thể đọc phần câu hỏi tại đây
-            </p>
-
-        </main>      
-      </Drawer>    
+          <p>
+            Tiếng ViệtCho 2 số rất lớn a và b thể hiện bằng 2 xâu kí tự Hãy đưa
+            ra tích của 2 số trên Các ngôn ngữ đều hỗ trợ bigInt, vì vậy bài này
+            chỉ hỗ trợ ngôn ngữ C++ Ví dụ: Với a = "12", b = "11", thì
+            bigintProduct(a, b) = "132" Đầu vào, đầu ra: Đầu vào: string a, b
+            Guaranteed constraints: Đầu ra: string Tích của 2 số a và b Nếu bạn
+            chưa biết cách nộp bài trên hệ thống thì có thể đọc phần câu hỏi tại
+            đây. Hãy đưa ra tích của 2 số trên Các ngôn ngữ đều hỗ trợ bigInt,
+            vì vậy bài này chỉ hỗ trợ ngôn ngữ C++ Ví dụ: Với a = "12", b =
+            "11", thì bigintProduct(a, b) = "132" Đầu vào, đầu ra: Đầu vào:
+            string a, b Guaranteed constraints: Đầu ra: string Tích của 2 số a
+            và b Nếu bạn chưa biết cách nộp bài trên hệ thống thì có thể đọc
+            phần câu hỏi tại đây. Hãy đưa ra tích của 2 số trên Các ngôn ngữ đều
+            hỗ trợ bigInt, vì vậy bài này chỉ hỗ trợ ngôn ngữ C++ Ví dụ: Với a =
+            "12", b = "11", thì bigintProduct(a, b) = "132" Đầu vào, đầu ra: Đầu
+            vào: string a, b Guaranteed constraints: Đầu ra: string Tích của 2
+            số a và b Nếu bạn chưa biết cách nộp bài trên hệ thống thì có thể
+            đọc phần câu hỏi tại đây
+          </p>
+        </main>
+      </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <AceTextEditor />
-      </main> 
+      </main>
     </div>
   );
 }
-
-
-
 
 //   < !DOCTYPE html >
 //     <html lang="en">

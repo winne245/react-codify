@@ -1,13 +1,12 @@
 import { Button } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import "ace-builds/src-min-noconflict/mode-c_cpp";
 import "ace-builds/src-min-noconflict/theme-twilight";
 import React, { useState } from "react";
 // Ace editor configs
 import AceEditor from "react-ace";
-import axios from '../api/axios';
-
+import axios from "../api/axios";
 
 const useStyles = makeStyles((theme) => ({
   styles: {
@@ -21,22 +20,23 @@ function AceTextEditor(props) {
   const [result, setResult] = useState("");
   // This get value from Ace Editor
   const onChange = (newValue) => {
-    setData(newValue)
+    setData(newValue);
   };
 
-  const run = async () => {
-    try {
-      const response = await axios.post("/run", { code: data });
-      // Code result from server
-      setResult(response.data);
-    } catch (error) {
-      alert(error.response.data);
-    }
-  };
+  // const run = async () => {
+  //   try {
+  //     // const response = await axios.post("/run", { code: data });
+  //     // // Code result from server
+  //     // setResult(response.data);
+  //     alert("Hello");
+  //   } catch (error) {
+  //     alert(error.response.data);
+  //   }
+  // };
 
   const handleSubmit = () => {
-    alert(data)
-  }
+    alert(data);
+  };
 
   return (
     <>
@@ -57,7 +57,9 @@ function AceTextEditor(props) {
         }}
         className={classes.styles}
       />
-      <Button Button onClick={run}>Run</Button>
+      <Button Button onClick={run}>
+        Run
+      </Button>
       <p>{result}</p>
     </>
   );

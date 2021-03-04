@@ -1,25 +1,24 @@
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { makeStyles } from '@material-ui/core/styles';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import PeopleIcon from '@material-ui/icons/People';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import React from 'react';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import { makeStyles } from "@material-ui/core/styles";
+import BarChartIcon from "@material-ui/icons/BarChart";
+import LayersIcon from "@material-ui/icons/Layers";
+import PeopleIcon from "@material-ui/icons/People";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   sidebarList: {
     marginTop: 40,
     width: 70,
-    border: '1px solid #595959',
+    border: "1px solid #595959",
   },
   item: {
     height: 40,
     width: 30,
     marginLeft: 3,
   },
-
 }));
 
 export default function SidebarItems() {

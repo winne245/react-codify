@@ -57,8 +57,8 @@ function App() {
       const authenticate = async () => {
         try {
           const response = await axiosCodify.get("/authenticate");
-          dispatch({ type: ACTION_TYPE.USER, payload: response });
           dispatch({ type: ACTION_TYPE.SIGN_IN });
+          dispatch({ type: ACTION_TYPE.USER, payload: response });
         } catch (error) {
           localStorage.removeItem("accessToken");
         }
@@ -125,20 +125,6 @@ function App() {
                     <Route path="/social" component={Practice} />
                     <Route component={NotFound} />
                   </SwitchRouter>
-
-                  {/* <Switch>
-                      <Redirect exact from="/" to="/homepage" />
-                      {routes.map((route) => (
-                        <Route
-                          key={route.path}
-                          path={route.path}
-                          component={route.component}
-                        />
-                      ))}
-                    </Switch> */}
-                  {/* <Footer /> */}
-                  {/* <Scroll showBelow={300} /> */}
-                  {/* </Grid> */}
                 </Router>
               </>
             )}
