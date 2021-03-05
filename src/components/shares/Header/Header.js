@@ -190,7 +190,6 @@ function Header() {
     <div className={classes.root}>
       <AppBar position="fixed" color="default" className={classes.appBar}>
         <Toolbar style={{ paddingRight: 12 }}>
-          <SignIn />
           {/* <IconButton
             edge="start"
             className={classes.menuButton}

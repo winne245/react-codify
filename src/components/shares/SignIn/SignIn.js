@@ -83,7 +83,7 @@ export default function SignIn() {
           console.log("Error: ", response.message);
         }
         localStorage.setItem("accessToken", response.accessToken);
-        dispatch({ type: ACTION_TYPE.USER, payload: response.user });
+        // dispatch({ type: ACTION_TYPE.USER, payload: response.user });
         dispatch({ type: ACTION_TYPE.SIGN_IN });
       } catch (error) {
         setMessage("Wrong email or password!");

@@ -66,8 +66,8 @@ function App() {
       authenticate();
       // const decoded = jwt_decode(localStorage.getItem("accessToken"));
       // state.user = decoded.payload;
-    }
-  }, []);
+    };
+  }, [state.isSignIn]);
 
   // useEffect(() => {
   //   if (localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken")) {
