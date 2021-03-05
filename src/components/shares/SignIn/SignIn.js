@@ -15,6 +15,9 @@ import React, { useState } from "react";
 import axiosCodify from "../../../api/axios";
 import { useStateValue } from "../../../context/StateProvider";
 import { ACTION_TYPE } from "../../../reducers/reducer";
+import firebase from 'firebase';
+import { StyledFirebaseAuth } from 'react-firebaseui';
+import SnackbarError from "../SignUp/SnackbarError";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,20 +40,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const uiConfig = {
-//   // Popup signin flow rather than redirect flow.
-//   signInFlow: 'popup',
-//   // signInSuccessUrl: '/',
-//   // We will display Google and Facebook as auth providers.
-//   signInOptions: [
-//     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//     firebase.auth.FacebookAuthProvider.PROVIDER_ID
-//   ]
-//   // callbacks: {
-//   //   // Avoid redirects after sign-in.
-//   //   signInSuccessWithAuthResult: () => false
-//   // }
-// };
+const uiConfig = {
+  // Popup signin flow rather than redirect flow.
+  signInFlow: 'popup',
+  // signInSuccessUrl: '/',
+  // We will display Google and Facebook as auth providers.
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID
+  ]
+  // callbacks: {
+  //   // Avoid redirects after sign-in.
+  //   signInSuccessWithAuthResult: () => false
+  // }
+};
 
 export default function SignIn() {
   const classes = useStyles();
@@ -61,7 +64,8 @@ export default function SignIn() {
   });
 
   const [isChecked, setIsChecked] = useState(false);
-
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [message, setMessage] = useState(null);
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -75,12 +79,15 @@ export default function SignIn() {
     const signIn = async () => {
       try {
         const response = await axiosCodify.post("/signin", user);
+        if (response.message) {
+          console.log("Error: ", response.message);
+        }
         localStorage.setItem("accessToken", response.accessToken);
-        // const decoded = jwt_decode(response.accessToken);
-        // state.user = decoded.payload;
-        // console.log(state.user)
+        dispatch({ type: ACTION_TYPE.USER, payload: response.user });
         dispatch({ type: ACTION_TYPE.SIGN_IN });
       } catch (error) {
+        setMessage("Wrong email or password!");
+        setOpenSnackbar(true);
         console.log("Error: ", error);
       }
     };
@@ -100,6 +107,7 @@ export default function SignIn() {
         <Container component="main" maxWidth="xl">
           <CssBaseline />
           <div className={classes.paper}>
+            <SnackbarError message={message} openSnackbar={openSnackbar} setOpenSnackbar={setOpenSnackbar} />
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
@@ -154,7 +162,7 @@ export default function SignIn() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                // onClick={handleSignInSubmit}
+              // onClick={handleSignInSubmit}
               >
                 Sign In
               </Button>
@@ -171,7 +179,7 @@ export default function SignIn() {
                 </Grid>
               </Grid>
             </form>
-            {/* <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/> */}
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
           </div>
         </Container>
       </Dialog>

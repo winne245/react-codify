@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
   },
   language: {
     marginLeft: 5,
-    width: 132,
+    width: 133,
     height: 31,
     border: "none",
     borderRadius: 5,
@@ -305,6 +305,7 @@ export default function Code(props) {
     compiler: "g++",
     input: "",
   });
+
   const onChangeCode = (newValue) => {
     setRunData({
       ...runData,

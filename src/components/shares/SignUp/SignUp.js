@@ -1,10 +1,11 @@
+import { Snackbar } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
-import Snackbar from '@material-ui/core/Snackbar';
+// import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +14,7 @@ import firebase from 'firebase';
 import React, { useState } from 'react';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import axiosCodify from '../../../api/axios';
+import SnackbarError from './SnackbarError';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -71,23 +73,20 @@ export default function SignUp() {
     setOpen(false);
   };
 
-  const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
-  };
-
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
     const signUn = async () => {
       try {
         const response = await axiosCodify.post('/signup', user);
-        if (response) {
+        if (response.message) {
           setMessage(response.message);
           setOpenSnackbar(true);
         }
       } catch (error) {
+        window.alert(error);
         console.log('Error: ', error);
       }
-    }
+    };
     signUn();
   };
 
@@ -105,29 +104,13 @@ export default function SignUp() {
         <Container component="main" maxWidth="xl">
           <CssBaseline />
           <div className={classes.paper}>
+            <SnackbarError message={message} openSnackbar={openSnackbar} setOpenSnackbar={setOpenSnackbar} />
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign Up
             </Typography>
-            {/* <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}> */}
-            <Snackbar
-              anchorOrigin={{
-                vertical: 'center',
-                horizontal: 'center',
-              }}
-              open={openSnackbar}
-              autoHideDuration={4000}
-              onClose={handleCloseSnackbar}
-              message={message}
-              action={
-                <Button variant="outlined" color="secondary" size="small" onClick={handleCloseSnackbar}>
-                  OK
-                </Button>
-              }
-            />
-            {/* <Snackbar message={message} openSnackbar={openSnackbar}/> */}
             <form className={classes.form} noValidate onSubmit={handleSignUpSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
