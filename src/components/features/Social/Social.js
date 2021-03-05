@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -10,
   },
   sidebarItem: {
-    width: 220,
+    width: 270,
     marginLeft: 10,
     borderRadius: 25,
     "&:hover": {},

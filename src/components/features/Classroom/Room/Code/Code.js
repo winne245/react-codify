@@ -1,4 +1,4 @@
-import { Button, Dialog, Slide, Tab, Tabs, Tooltip } from "@material-ui/core";
+import { Button, Dialog, Slide, Tab, Tabs, TextField, Tooltip } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
@@ -13,16 +13,16 @@ import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import HelpIcon from "@material-ui/icons/Help";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import ZoomOutMapIcon from "@material-ui/icons/ZoomOutMap";
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
-import axiosCodify from "../../../../api/axios";
-import { useStateValue } from "../../../../context/StateProvider";
+import axiosCodify from "../../../../../api/axios";
+import { useStateValue } from "../../../../../context/StateProvider";
 import AceTextEditor from "./AceEditor";
 
 export const defaultDrawerWidth = 620;
 const minDrawerWidth = 70;
-const maxDrawerWidth = 1470;
+const maxDrawerWidth = 1172;
 
 export const defaultDrawerHeight = 393;
 const minDrawerHeight = 100;
@@ -70,8 +70,9 @@ const useStyles = makeStyles((theme) => ({
     cursor: "col-resize",
     position: "absolute",
     top: "45%",
-    right: -15,
+    right: -14.8,
     zIndex: 100,
+    border: "1px solid #c1c1c1",
   },
   code: {
     flexGrow: 1,
@@ -83,16 +84,29 @@ const useStyles = makeStyles((theme) => ({
   option: {
     padding: 5,
     display: "flex",
+    justifyContent: 'space-between',
+  },
+  optionSon: {
+    display: "flex",
   },
   zoom: {
     borderRadius: 5,
   },
   language: {
     marginLeft: 5,
-    width: 150,
+    width: 132,
     height: 31,
     border: "none",
     borderRadius: 5,
+    cursor: "pointer",
+  },
+  frontSize: {
+    marginLeft: 5,
+    width: 45,
+    height: 31,
+    border: "none",
+    borderRadius: 5,
+    cursor: "pointer",
   },
   draggerHeight: {
     cursor: "col-resize",
@@ -105,9 +119,11 @@ const useStyles = makeStyles((theme) => ({
     cursor: "row-resize",
     position: "absolute",
     right: "50%",
-    bottom: -15,
+    bottom: -14.8,
     zIndex: 100,
     transform: "rotate(90deg)",
+    border: "1px solid #c1c1c1",
+
   },
   terminalTabs: {
     width: "100%",
@@ -131,7 +147,7 @@ const useStyles = makeStyles((theme) => ({
   },
   terminalTestCase: {
     display: "flex",
-    height: "100%",
+    minHeight: 144,
   },
   terminalTabsTestCase: {
     // borderRight: '1px solid #c1c1c1',
@@ -148,6 +164,22 @@ const useStyles = makeStyles((theme) => ({
   },
   consoleContent: {
     padding: 15,
+    minHeight: 144,
+    display: 'flex',
+  },
+  consoleInput: {
+    padding: 15,
+    width: '40%',
+    borderRight: "1px solid #c1c1c1",
+
+  },
+  consoleOutput: {
+    padding: 15,
+    width: '60%',
+  },
+  consoleContent: {
+    minHeight: 144,
+    display: 'flex',
   },
   action: {
     display: "flex",
@@ -157,6 +189,14 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 0px 4px #424242",
   },
   txtInput: {
+  },
+  txtOutput: {
+    padding: 15,
+    minHeight: 55,
+    border: "1px solid #a6a8ac",
+    borderRadius: 4,
+  },
+  txtInput1: {
     maxHeight: 30,
     maxWeight: 152,
     borderRadius: 5,
@@ -306,6 +346,10 @@ export default function Code(props) {
     console.log(submitData);
   };
 
+  const [mode, setMode] = useState('c_cpp');
+  const [theme, setTheme] = useState('dracula');
+  const [frontSize, setFrontSize] = useState('14pt');
+
   return (
     <>
       <div className={classes.btn}>
@@ -403,48 +447,129 @@ export default function Code(props) {
           </div>
           <Paper className={classes.code}>
             <div className={classes.option}>
-              <IconButton
-                className={classes.zoom}
-                size="small"
-                onClick={handleFullSize}
-                style={{
-                  backgroundColor: state.isDarkMode ? "#353535" : "#D8DADF",
-                }}>
-                {fullSize ? (
-                  <FilterNoneIcon style={{ height: 18 }} />
-                ) : (
-                  <ZoomOutMapIcon style={{ height: 18 }} />
-                )}
-              </IconButton>
-              <select
-                id="selectList"
-                className={classes.language}
-                onChange={(e) => {
-                  var sel = document.getElementById("selectList");
-                  console.log(sel.value);
-                  if (sel.value == "c") {
-                    setRunData({
-                      ...runData,
-                      language: "c",
-                      compiler: "g++",
-                    });
-                  } else if (sel.value == "python") {
-                    setRunData({
-                      ...runData,
-                      language: "py",
-                      compiler: "python",
-                    });
-                  }
-                  console.log(runData);
-                }}
-                style={{
-                  backgroundColor: state.isDarkMode ? "#353535" : "#D8DADF",
-                  color: state.isDarkMode ? "#ffffff" : "rgba(0, 0, 0, 0.54)",
-                }}>
-                <option value="c">C</option>
-                {/* <option value="c++">C++</option> */}
-                <option value="python">Python</option>
-              </select>
+              <div className={classes.optionSon}>
+                <IconButton
+                  className={classes.zoom}
+                  size="small"
+                  onClick={handleFullSize}
+                  style={{
+                    backgroundColor: state.isDarkMode ? "#353535" : "#D8DADF",
+                  }}>
+                  {fullSize ? (
+                    <FilterNoneIcon style={{ height: 15 }} />
+                  ) : (
+                      <ZoomOutMapIcon style={{ height: 18 }} />
+                    )}
+                </IconButton>
+                <select
+                  id="selectLangue"
+                  className={classes.language}
+                  defaultValue={mode}
+                  onChange={(e) => {
+                    var sel = document.getElementById("selectLangue");
+                    console.log(sel.value);
+                    if (sel.value == "c") {
+                      setMode("c_cpp");
+                      setRunData({
+                        ...runData,
+                        language: "c",
+                        compiler: "g++",
+                      });
+                    } else if (sel.value == "python") {
+                      setMode("python");
+                      setRunData({
+                        ...runData,
+                        language: "py",
+                        compiler: "python",
+                      });
+                    } else if (sel.value == "c#") {
+                      setMode("csharp");
+                      setRunData({
+                        ...runData,
+                        language: "c#",
+                        compiler: "c#",
+                      });
+                    } else if (sel.value == "java") {
+                      setMode("java");
+                      setRunData({
+                        ...runData,
+                        language: "java",
+                        compiler: "java",
+                      });
+                    }
+                    console.log(runData);
+                  }}
+                  style={{
+                    backgroundColor: state.isDarkMode ? "#353535" : "#D8DADF",
+                    color: state.isDarkMode ? "#ffffff" : "rgba(0, 0, 0, 0.54)",
+                  }}>
+                  <option value="c">C</option>
+                  <option value="python">Python</option>
+                  <option value="c#">C#</option>
+                  <option value="java">Java</option>
+                </select>
+              </div>
+              <div className={classes.optionSon}>
+                <select
+                  id="selectFrontSize"
+                  className={classes.frontSize}
+                  defaultValue={frontSize}
+                  onChange={(e) => {
+                    var sel2 = document.getElementById("selectFrontSize");
+                    console.log(sel2.value);
+                    if (sel2.value == "8pt") {
+                      setFrontSize('8pt');
+                    } else if (sel2.value == "10pt") {
+                      setFrontSize('10pt');
+                    } else if (sel2.value == "12pt") {
+                      setFrontSize('12pt');
+                    } else if (sel2.value == "14pt") {
+                      setFrontSize('14pt');
+                    } else if (sel2.value == "16pt") {
+                      setFrontSize('16pt');
+                    }
+                  }}
+                  style={{
+                    backgroundColor: state.isDarkMode ? "#353535" : "#D8DADF",
+                    color: state.isDarkMode ? "#ffffff" : "rgba(0, 0, 0, 0.54)",
+                  }}>
+                  <option value="8pt">8</option>
+                  <option value="10pt">10</option>
+                  <option value="12pt">12</option>
+                  <option value="14pt">14</option>
+                  <option value="16pt">16</option>
+                </select>
+
+                <select
+                  id="selectTheme"
+                  className={classes.language}
+                  defaultValue={theme}
+                  onChange={(e) => {
+                    var sel1 = document.getElementById("selectTheme");
+                    console.log(sel1.value);
+                    if (sel1.value == "dracula") {
+                      setTheme('dracula');
+                    } else if (sel1.value == "terminal") {
+                      setTheme('terminal');
+                    } else if (sel1.value == "sqlserver") {
+                      setTheme('sqlserver');
+                    } else if (sel1.value == "tomorrow_night_blue") {
+                      setTheme('tomorrow_night_blue');
+                    } else if (sel1.value == "solarized_light") {
+                      setTheme('solarized_light');
+                    }
+                  }}
+                  style={{
+                    backgroundColor: state.isDarkMode ? "#353535" : "#D8DADF",
+                    color: state.isDarkMode ? "#ffffff" : "rgba(0, 0, 0, 0.54)",
+                  }}>
+                  <option value="dracula">Dracula</option>
+                  <option value="sqlserver">Light</option>
+                  <option value="terminal">Dark</option>
+                  <option value="tomorrow_night_blue">Blue</option>
+                  <option value="solarized_light">Solarized</option>
+                </select>
+              </div>
             </div>
             <main>
               {props.result == null ? (
@@ -453,17 +578,23 @@ export default function Code(props) {
                     drawerHeight={drawerHeight}
                     onChangeCode={onChangeCode}
                     exerciseResultCode=""
+                    theme={theme}
+                    frontSize={frontSize}
+                    mode={mode}
                   />
                 </>
               ) : (
-                <>
-                  <AceTextEditor
-                    drawerHeight={drawerHeight}
-                    onChangeCode={onChangeCode}
-                    exerciseResultCode={props.result.studentCode}
-                  />
-                </>
-              )}
+                  <>
+                    <AceTextEditor
+                      drawerHeight={drawerHeight}
+                      onChangeCode={onChangeCode}
+                      exerciseResultCode={props.result.studentCode}
+                      theme={theme}
+                      frontSize={frontSize}
+                      mode={mode}
+                    />
+                  </>
+                )}
               <div
                 onMouseDown={(e) => handleMouseDown1(e)}
                 className={classes.draggerHeight}>
@@ -545,33 +676,36 @@ export default function Code(props) {
                 </TabPanel>
                 <TabPanel value={valueTerminal} index={1}>
                   <div className={classes.consoleContent}>
-                    {dataResponse.map((item, index) =>
-                      item.type == "success" ? (
-                        <>
-                          <strong>RUN TEST SUCCESS</strong>
-                          <br />
-                          <br />
-                          <strong>Input:</strong> {item.input}
-                          <br />
-                          <br />
-                          <strong>Output:</strong> {item.output}
-                          <br />
-                          <br />
-                          <strong>Run time:</strong> {item.runTime} ms
-                        </>
-                      ) : (
-                        <>
-                          <strong>RUN TEST FAIL</strong>
-                          <br />
-                          <br />
-                          <strong>Error:</strong>
-                          <span style={{ color: "#ef7676" }}>
-                            {" "}
-                            {item.output}
-                          </span>
-                        </>
-                      )
-                    )}
+                    <div className={classes.consoleInput}>
+                      <strong>Input:</strong>
+                      <br />
+                      <TextField
+                        variant="outlined"
+                        multiline
+                        fullWidth
+                        id="input"
+                        name="input"
+                        type="text"
+                        onChange={(e) =>
+                          setRunData({ ...runData, input: e.target.value })
+                        }
+                        className={classes.txtInput}
+                      />
+                    </div>
+                    <div className={classes.consoleOutput}>
+                      <strong>Output:</strong>
+                      <br />
+                      <div className={classes.txtOutput}>
+                        {dataResponse.map((item, index) => (
+                          <>
+                            <span style={{ color: item.type == "success" ? "#3578E5" : "#ef7676", }}>
+                              {" "}
+                              {item.output}
+                            </span>
+                          </>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </TabPanel>
               </Paper>
@@ -582,14 +716,14 @@ export default function Code(props) {
                 borderTop: state.isDarkMode ? "none" : "1px solid #c1c1c1",
               }}
               className={classes.action}>
-              <textarea
+              {/* <textarea
                 type="text"
                 placeholder="Enter the input to run test.."
                 onChange={(e) =>
                   setRunData({ ...runData, input: e.target.value })
                 }
-                className={classes.txtInput}
-              />
+                className={classes.txtInput1}
+              /> */}
               <Button
                 variant="outlined"
                 color="primary"

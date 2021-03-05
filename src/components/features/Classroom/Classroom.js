@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   //   fontSize: '1.875',
   // },
   sidebarItem: {
-    width: 278,
+    width: 270,
     marginLeft: 10,
     borderRadius: 25,
     '&:hover': {

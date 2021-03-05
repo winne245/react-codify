@@ -57,8 +57,8 @@ function App() {
       const authenticate = async () => {
         try {
           const response = await axiosCodify.get("/authenticate");
-          dispatch({ type: ACTION_TYPE.SIGN_IN });
           dispatch({ type: ACTION_TYPE.USER, payload: response });
+          dispatch({ type: ACTION_TYPE.SIGN_IN });
         } catch (error) {
           localStorage.removeItem("accessToken");
         }
@@ -110,24 +110,24 @@ function App() {
             {state.isLoading ? (
               <WaveLoading color={"#3578E5"} size="large" />
             ) : (
-              <>
-                <Router>
-                  {/* <Grid container direction="row" justify="center" alignItems="center"> */}
-                  {/* <Detail /> */}
-                  {/* <Demo /> */}
-                  <Header />
-                  <SwitchRouter>
-                    <Redirect exact from="/" to="/homepage" />
-                    <Route path="/homepage" component={Homepage} />
-                    <Route path="/classrooms" component={Classroom} />
-                    <Route path="/lesson" component={Lesson} />
-                    <Route path="/practice" component={Practice} />
-                    <Route path="/social" component={Practice} />
-                    <Route component={NotFound} />
-                  </SwitchRouter>
-                </Router>
-              </>
-            )}
+                <>
+                  <Router>
+                    {/* <Grid container direction="row" justify="center" alignItems="center"> */}
+                    {/* <Detail /> */}
+                    {/* <Demo /> */}
+                    <Header />
+                    <SwitchRouter>
+                      <Redirect exact from="/" to="/homepage" />
+                      <Route path="/homepage" component={Homepage} />
+                      <Route path="/classrooms" component={Classroom} />
+                      <Route path="/lesson" component={Lesson} />
+                      <Route path="/practice" component={Practice} />
+                      <Route path="/social" component={Practice} />
+                      <Route component={NotFound} />
+                    </SwitchRouter>
+                  </Router>
+                </>
+              )}
           </div>
         </Paper>
       </ThemeProvider>

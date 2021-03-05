@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouteMatch } from "react-router-dom";
 import axiosCodify from '../../../../api/axios';
 import { useStateValue } from "../../../../context/StateProvider";
-import Code from './Code';
+import Code from './Code/Code';
 import StudentWork from './StudentWork';
 
 

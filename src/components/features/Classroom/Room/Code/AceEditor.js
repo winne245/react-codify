@@ -7,8 +7,14 @@ import "ace-builds";
 import ace from "ace-builds/src-noconflict/ace";
 
 import "ace-builds/src-min-noconflict/mode-c_cpp";
-import "ace-builds/src-min-noconflict/theme-twilight";
+import "ace-builds/src-min-noconflict/mode-python";
+import "ace-builds/src-min-noconflict/mode-csharp";
+import "ace-builds/src-min-noconflict/mode-java";
 import "ace-builds/src-min-noconflict/theme-dracula";
+import "ace-builds/src-min-noconflict/theme-terminal";
+import "ace-builds/src-min-noconflict/theme-sqlserver";
+import "ace-builds/src-min-noconflict/theme-solarized_light";
+import "ace-builds/src-min-noconflict/theme-tomorrow_night_blue";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import "ace-builds/src-min-noconflict/ext-emmet";
 
@@ -23,7 +29,8 @@ ace.config.setModuleUrl(
 
 const useStyles = makeStyles((theme) => ({
   styles: {
-    // marginTop: "
+    // : "d8dadf
+    boxShadow: "0px 0px 5px #424242",
   },
 }));
 
@@ -34,8 +41,8 @@ function AceTextEditor(props) {
       defaultValue={props.exerciseResultCode}
       width="100%"
       height={props.drawerHeight}
-      mode="c_cpp"
-      theme="dracula"
+      mode={props.mode}
+      theme={props.theme}
       onChange={props.onChangeCode}
       name="editor"
       editorProps={{ $blockScrolling: true }}
@@ -46,7 +53,7 @@ function AceTextEditor(props) {
         enableMultiselect: true,
         enableSnippets: true,
       }}
-      fontSize="14pt"
+      fontSize={props.frontSize}
       className={classes.styles}
     />
   );

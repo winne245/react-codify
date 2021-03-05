@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 import axiosCodify from "../../../../api/axios";
 import ReactHtmlParser from 'react-html-parser';
 import { useStateValue } from "../../../../context/StateProvider";
-import AceTextEditor from "./AceEditor";
+import AceTextEditor from "./Code/AceEditor";
 
 const useStyles = makeStyles((theme) => ({
   terminalTestCase: {
