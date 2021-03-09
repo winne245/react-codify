@@ -29,7 +29,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 14,
     borderLeft: '1px solid #c1c1c1',
   },
-
+  content: {
+    borderTop: "1px solid #c1c1c1",
+    marginTop: 10,
+    marginBottom: -15,
+    paddingTop: 10,
+  },
   paperLeft1: {
     height: 430,
     overflow: 'auto',
@@ -86,7 +91,7 @@ export default function StudentWorkResult(props) {
             )}
           <Typography><strong>Due:</strong> {new Date(props.exerciseResult.exercise.expiredTime).toLocaleString()}</Typography>
           <Typography><strong>Commit day:</strong> {new Date(props.exerciseResult.submitTime).toLocaleString()}</Typography>
-          <Typography style={{ marginTop: 20 }}><strong>Content:</strong></Typography>
+          <Typography className={classes.content}><strong>Content:</strong></Typography>
           {ReactHtmlParser(props.exerciseResult.exercise.content)}
         </Paper>
       </Grid>

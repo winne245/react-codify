@@ -12,7 +12,7 @@ import axiosCodify from '../../../../api/axios';
 import { useStateValue } from "../../../../context/StateProvider";
 import Code from './Code/Code';
 import StudentWork from './StudentWork';
-
+import ReactHtmlParser from "react-html-parser";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +53,12 @@ const useStyles = makeStyles((theme) => ({
   },
   paperRightComment: {
     marginBottom: 16,
+  },
+  content: {
+    borderTop: "1px solid #c1c1c1",
+    marginTop: 10,
+    marginBottom: -15,
+    paddingTop: 10,
   },
 }));
 
@@ -217,6 +223,12 @@ export default function DetailWork() {
             <Typography component="p">
               <strong>Due:</strong> {new Date(exercise.expiredTime).toLocaleString()}
             </Typography>
+            <Typography component="p" className={classes.content}>
+              <strong >Content:</strong>
+              <br />
+
+            </Typography>
+            {ReactHtmlParser(exercise.content)}
           </Paper>
           <Paper className={classes.paperLeftComment}>
             <Accordion >

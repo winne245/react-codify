@@ -289,7 +289,6 @@ export default function Code(props) {
       setFullSize(true);
     }
   };
-
   const [testCases, setTestCases] = useState([]);
   const [dataResponse, setDataResponse] = useState([]);
   const [runData, setRunData] = useState({
@@ -307,6 +306,7 @@ export default function Code(props) {
   });
 
   const onChangeCode = (newValue) => {
+    setExerciseResultCode(newValue);
     setRunData({
       ...runData,
       code: newValue,
@@ -350,7 +350,14 @@ export default function Code(props) {
   const [mode, setMode] = useState('c_cpp');
   const [theme, setTheme] = useState('dracula');
   const [frontSize, setFrontSize] = useState('14pt');
-
+  const [exerciseResultCode, setExerciseResultCode] = useState("");
+  useEffect(() => {
+    if (props.result != null) {
+      setExerciseResultCode(props.result.studentCode);
+      console.log(props.result.studentCode)
+      console.log(exerciseResultCode)
+    }
+  }, [props.result]);
   return (
     <>
       <div className={classes.btn}>
@@ -492,6 +499,7 @@ export default function Code(props) {
                       });
                     } else if (sel.value == "java") {
                       setMode("java");
+                      setExerciseResultCode("public class code + userId {\n    public static void main (String[] args) {\n        /* code */\n    }\n    \n}");
                       setRunData({
                         ...runData,
                         language: "java",
@@ -573,12 +581,12 @@ export default function Code(props) {
               </div>
             </div>
             <main>
-              {props.result == null ? (
+              {/* {props.result == null ? (
                 <>
                   <AceTextEditor
                     drawerHeight={drawerHeight}
                     onChangeCode={onChangeCode}
-                    exerciseResultCode=""
+                    exerciseResultCode={exerciseResultCode}
                     theme={theme}
                     frontSize={frontSize}
                     mode={mode}
@@ -595,7 +603,15 @@ export default function Code(props) {
                       mode={mode}
                     />
                   </>
-                )}
+                )} */}
+              <AceTextEditor
+                drawerHeight={drawerHeight}
+                onChangeCode={onChangeCode}
+                exerciseResultCode={exerciseResultCode}
+                theme={theme}
+                frontSize={frontSize}
+                mode={mode}
+              />
               <div
                 onMouseDown={(e) => handleMouseDown1(e)}
                 className={classes.draggerHeight}>

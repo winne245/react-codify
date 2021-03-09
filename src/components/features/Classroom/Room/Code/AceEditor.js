@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 // Ace editor configs
@@ -33,12 +33,11 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 0px 5px #424242",
   },
 }));
-
 function AceTextEditor(props) {
   const classes = useStyles();
   return (
     <AceEditor
-      defaultValue={props.exerciseResultCode}
+      value={props.exerciseResultCode}
       width="100%"
       height={props.drawerHeight}
       mode={props.mode}
