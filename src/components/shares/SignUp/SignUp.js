@@ -14,7 +14,7 @@ import firebase from 'firebase';
 import React, { useState } from 'react';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import axiosCodify from '../../../api/axios';
-import SnackbarError from './SnackbarError';
+import SnackbarError from '../Snackbar/SnackbarError';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

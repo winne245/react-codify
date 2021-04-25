@@ -14,7 +14,7 @@ import { useStateValue } from "../../../context/StateProvider";
 import { ACTION_TYPE } from "../../../reducers/reducer";
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
-
+import logo from '../../../logo.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -198,7 +198,8 @@ function Header() {
           </IconButton> */}
           <Toolbar className={classes.toolBarLeft}>
             <NavLink to="/homepage">
-              <Avatar alt="" src={require('../../../assets/images/logo.png')} />
+              {/* <Avatar alt="" src={require('../../../assets/images/logo.png')} /> */}
+              <img src={logo} className="App-logo" alt="logo" />
             </NavLink>
           </Toolbar>
           {/* {!state.isSignIn ? (
@@ -273,49 +274,49 @@ function Header() {
                 <SignUp />
               </>
             ) : (
-                <>
-                  <IconButton aria-label="show 17 new notifications" color="inherit">
-                    <Badge badgeContent={17} color="secondary">
-                      <NotificationsIcon />
-                    </Badge>
-                  </IconButton>
+              <>
+                <IconButton aria-label="show 17 new notifications" color="inherit">
+                  <Badge badgeContent={17} color="secondary">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
 
-                  <IconButton
-                    aria-label="account of current user"
-                    aria-controls="menu-appBar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                  >
-                    <Avatar style={{ backgroundColor: '#3c87c0', height: 32, width: 32 }} >
-                      {state.user.firstName.charAt(0)}
-                    </Avatar>
-                    {/* <Avatar alt="" src={require('../../../assets/images/avatar.png')} /> */}
-                    {/* <Avatar alt="" src={firebase.auth().currentUser.photoURL} /> */}
-                  </IconButton>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appBar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <Avatar style={{ backgroundColor: '#3c87c0', height: 32, width: 32 }} >
+                    {state.user.firstName.charAt(0)}
+                  </Avatar>
+                  {/* <Avatar alt="" src={require('../../../assets/images/avatar.png')} /> */}
+                  {/* <Avatar alt="" src={firebase.auth().currentUser.photoURL} /> */}
+                </IconButton>
 
-                  <Menu
-                    id="menu-appBar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    open={open}
-                    onClose={handleClose}
-                    className={classes.menu}
-                  >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
-                  </Menu>
-                </>
-              )}
+                <Menu
+                  id="menu-appBar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={handleClose}
+                  className={classes.menu}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
+                </Menu>
+              </>
+            )}
           </Toolbar>
         </Toolbar>
       </AppBar>

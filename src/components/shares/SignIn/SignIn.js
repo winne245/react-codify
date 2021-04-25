@@ -17,7 +17,7 @@ import { useStateValue } from "../../../context/StateProvider";
 import { ACTION_TYPE } from "../../../reducers/reducer";
 import firebase from 'firebase';
 import { StyledFirebaseAuth } from 'react-firebaseui';
-import SnackbarError from "../SignUp/SnackbarError";
+import SnackbarError from "../Snackbar/SnackbarError";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

@@ -111,7 +111,7 @@ export default function Exercises(props) {
                         color="primary"
                         component={Link}
                         to={`${match.url}/${item._id}`}
-                        style={{marginTop: 16}}
+                        style={{ marginTop: 16 }}
                         className={classes.submit}
                       >
                         {/* <AttachFileIcon style={{ height: 20, marginLeft: -10 }} /> */}
@@ -137,9 +137,9 @@ export default function Exercises(props) {
               <CreateWork match={match} callbackOpen={callbackOpen} />
             </>
           ) : (
-              <>
-              </>
-            )}
+            <>
+            </>
+          )}
         </Route>
         <Route path={`${match.url}/:_id`} component={DetailWork} />
         <Route component={NotFound} />

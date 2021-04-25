@@ -38,8 +38,8 @@ export default function SnackbarError(props) {
         autoHideDuration={5000}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'center',
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
       >
         <Alert onClose={handleClose} severity="error">

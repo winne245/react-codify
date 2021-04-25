@@ -466,8 +466,8 @@ export default function Code(props) {
                   {fullSize ? (
                     <FilterNoneIcon style={{ height: 15 }} />
                   ) : (
-                      <ZoomOutMapIcon style={{ height: 18 }} />
-                    )}
+                    <ZoomOutMapIcon style={{ height: 18 }} />
+                  )}
                 </IconButton>
                 <select
                   id="selectLangue"

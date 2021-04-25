@@ -2,7 +2,7 @@
 import { Paper, StylesProvider } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import firebase from "firebase";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // Loading page
 import { WaveLoading } from "react-loadingg";
 import {
@@ -24,6 +24,7 @@ import Header from "./components/shares/Header/Header";
 // import Header from "./components/Header";
 // import Footer from "./components/Footer";
 import NotFound from "./components/shares/NotFound/NotFound";
+import SnackbarSuccess from "./components/shares/Snackbar/SnackbarSuccess";
 // const Homepage = React.lazy(() => import("./components/features/Homepage/Homepage"));
 // const Classroom = React.lazy(() => import("./components/features/Classroom/Classroom"));
 // const Practice = React.lazy(() => import("./components/features/Practice/Practice"));
@@ -44,6 +45,7 @@ firebase.initializeApp(config);
 
 function App() {
   const [state, dispatch] = useStateValue();
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   useEffect(() => {
     // document.title = "Codify";
     setTimeout(() => {
@@ -59,6 +61,7 @@ function App() {
           const response = await axiosCodify.get("/authenticate");
           dispatch({ type: ACTION_TYPE.USER, payload: response });
           dispatch({ type: ACTION_TYPE.SIGN_IN });
+          setOpenSnackbar(true);
         } catch (error) {
           localStorage.removeItem("accessToken");
         }
@@ -116,6 +119,7 @@ function App() {
                     {/* <Detail /> */}
                     {/* <Demo /> */}
                     <Header />
+                    <SnackbarSuccess message="SignIn Successfully!" openSnackbar={openSnackbar} setOpenSnackbar={setOpenSnackbar} />
                     <SwitchRouter>
                       <Redirect exact from="/" to="/homepage" />
                       <Route path="/homepage" component={Homepage} />
