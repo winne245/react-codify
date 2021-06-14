@@ -64,6 +64,7 @@ function App() {
 					dispatch({ type: ACTION_TYPE.SIGN_IN });
 					setOpenSnackbar(true);
 				} catch (error) {
+					dispatch({ type: ACTION_TYPE.SIGN_OUT });
 					localStorage.removeItem("accessToken");
 				}
 			};
